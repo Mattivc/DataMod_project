@@ -8,7 +8,7 @@ public class TreningProgram {
         Statement st = null;
         ResultSet rs = null;
 
-        String url = "jdbc:mysql://localhost:3306/Trening";
+        String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
         String user = "user";
         String password = "12345678";
 
