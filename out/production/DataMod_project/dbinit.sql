@@ -8,7 +8,7 @@ GRANT ALL PRIVILEGES ON Trening.* TO 'user'@'localhost';
 FLUSH PRIVILEGES;
 
 CREATE TABLE GRUPPE (
-    GruppeID            INT            NOT NULL,
+    GruppeID            INT            NOT NULL AUTO_INCREMENT,
     Navn                VARCHAR(30)    NOT NULL,
     TilhørerGruppeID    INT,
     PRIMARY KEY(GruppeID),
@@ -16,7 +16,7 @@ CREATE TABLE GRUPPE (
 );
 
 CREATE TABLE ØVELSE (
-    ØvelseID        INT            NOT NULL,
+    ØvelseID        INT            NOT NULL AUTO_INCREMENT,
     Navn            VARCHAR(30)    NOT NULL,
     Beskrivelse     VARCHAR(200),
     Erstatning      INT,
@@ -28,7 +28,7 @@ CREATE TABLE ØVELSE (
 );
 
 CREATE TABLE TRENINGSØKT  (
-    TreningsØktID    INT         NOT NULL,
+    TreningsØktID    INT         NOT NULL AUTO_INCREMENT,
     Dato_tid         DATETIME    NOT NULL,
     Form             INT,
     Prestasjon       INT,
