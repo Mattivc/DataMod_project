@@ -2,6 +2,11 @@ DROP DATABASE IF EXISTS Trening;
 CREATE DATABASE IF NOT EXISTS Trening;
 USE Trening;
 
+DROP USER IF EXISTS 'user'@'localhost';
+CREATE USER 'user'@'localhost' IDENTIFIED BY '12345678';
+GRANT ALL PRIVILEGES ON Trening.* TO 'user'@'localhost';
+FLUSH PRIVILEGES;
+
 CREATE TABLE GRUPPE (
     GruppeID            INT            NOT NULL,
     Navn                VARCHAR(30)    NOT NULL,
