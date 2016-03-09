@@ -1,12 +1,11 @@
-import sun.tools.jconsole.Version;
 
 import java.sql.*;
 
 public class Activity {
 
-    public static boolean add(Connection con, String name, String description, Integer replacement, Integer group) {
+    public static boolean add(Connection connection, String name, String description, Integer replacement, Integer group) {
         try {
-            PreparedStatement post = con.prepareStatement("INSERT INTO ØVELSE (Navn, Beskrivelse, Erstatning, GruppeID) VALUES (?, ?, ?, ?)");
+            PreparedStatement post = connection.prepareStatement("INSERT INTO ØVELSE (Navn, Beskrivelse, Erstatning, GruppeID) VALUES (?, ?, ?, ?)");
             post.setString(1, name);
             post.setString(2, description);
             if (replacement == null) {
