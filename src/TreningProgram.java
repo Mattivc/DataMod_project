@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Scanner;
 
 
 public class TreningProgram {
@@ -15,10 +16,17 @@ public class TreningProgram {
         try {
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            rs = st.executeQuery("SELECT VERSION()");
 
-            if (rs.next()) {
-                System.out.println(rs.getString(1));
+            Scanner scanner = new Scanner(System.in);
+            InputHandler inputHandler = new InputHandler();
+
+            while (true) {
+                System.out.print("cmd: ");
+                String[] input = scanner.nextLine().split(" +");
+
+                assert input.length >= 1: "Invalid command";
+
+                if (inputHandler.HandleInput(input)) { break; }
             }
 
         } catch (SQLException ex) {
