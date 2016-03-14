@@ -123,6 +123,10 @@ public class InputHandler {
 
     }
 
+    public void DeleteGoal(int activityID, int exerciseID){
+
+    }
+
 
 
     public void DeleteActivity(String name) {
@@ -172,7 +176,7 @@ public class InputHandler {
                     "Create [ActivityID] [ExerciseID]- Create a new goal for the given activity in exercise\n" +
                     "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
                     "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
-                    
+
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
                 );
