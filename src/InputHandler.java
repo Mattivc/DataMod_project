@@ -1,5 +1,7 @@
 import javafx.scene.layout.Pane;
 
+import java.util.Date;
+
 public class InputHandler {
 
     public InputHandler() {
@@ -66,7 +68,18 @@ public class InputHandler {
 
                 break;
             case GOAL:
+                switch (cmd){
+                    case "create":
+                        if (input.length == 4) {
+                            CreateGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
+                        }
 
+
+
+
+
+
+                }
                 break;
         }
 
@@ -74,6 +87,10 @@ public class InputHandler {
     }
 
     public void CreateActivity(String name, String description) {
+
+    }
+
+    public void CreateGoal(int activityID, int exerciseID){
 
     }
 
