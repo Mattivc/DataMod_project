@@ -73,6 +73,18 @@ public class Goal {
         }
     }
 
+    public static Boolean setAsCompleted(Connection con, int activityID, int exerciseID) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("UPDATE MÅL SET Oppnådd = true WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+exerciseID+"");
+            return true;
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 
 
     public static void main(String[] args){
@@ -87,7 +99,7 @@ public class Goal {
         try {
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            System.out.print(Goal.getAll(con));
+            System.out.print(Goal.setAsCompleted(con, 1, 2));
 
         } catch (SQLException ex) {
             ex.printStackTrace();
