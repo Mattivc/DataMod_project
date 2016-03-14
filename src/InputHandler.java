@@ -1,5 +1,7 @@
 import javafx.scene.layout.Pane;
 
+import java.util.Date;
+
 public class InputHandler {
 
     public InputHandler() {
@@ -82,7 +84,24 @@ public class InputHandler {
                 }
                 break;
             case GOAL:
+                switch (cmd){
+                    case "create":
+                        if (NumArgs(input, 2)){
+                            CreateGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
+                        } break;
+                    case "reach":
+                        if (NumArgs(input, 3)){
+                            ReachGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]), input[3].equalsIgnoreCase("yes"));
+                        }
+                    case "delete":
+                        if (NumArgs(input, 2)){
+                            DeleteGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
+                        }
+                    default:
+                        System.out.println("Invalid command: " + cmd);
+                        break;
 
+                }
                 break;
         }
 
@@ -106,6 +125,14 @@ public class InputHandler {
     }
 
     public void ListActivity() {
+
+    }
+
+    public void CreateGoal(int activityID, int exerciseID){
+
+    }
+
+    public void ReachGoal(int activityID, int exerciseID, boolean reached){
 
     }
 
@@ -162,6 +189,16 @@ public class InputHandler {
                 );
                 break;
             case GOAL:
+                System.out.print(
+                    "-----------------------------------------------\n" +
+                    "Goal Commands: \n" +
+                    "Create [ActivityID] [ExerciseID]- Create a new goal for the given activity in exercise\n" +
+                    "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
+                    "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
+                    
+                    "Back - Return to main menu\n" +
+                    "-----------------------------------------------\n"
+                );
                 break;
         }
 
