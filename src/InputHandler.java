@@ -40,7 +40,7 @@ public class InputHandler {
                     case "list":
                         if (NumArgs(input, 1)) {
                             //CreateActivity(input[1], input[2]);
-                        }
+                        } break;
                     case "delete":
                         if (NumArgs(input, 2)) {
                             DeleteActivity(input[1]);
@@ -70,7 +70,14 @@ public class InputHandler {
 
                         } break;
                     case "startworkout":
-                        break;
+                        if (input.length == 1) {
+                            StartWorkout();
+                        } else if (input.length == 2) {
+                            StartWorkout(input[1]);
+                        } else {
+                            System.out.println("Wrong number of arguments");
+                            SetState(this.state);
+                        }
                     default:
                         System.out.println("Invalid command: " + cmd);
                         break;
@@ -111,7 +118,13 @@ public class InputHandler {
         }
     }
 
+
+    // ----- ACTIVITY ----
     public void CreateActivity(String name, String description) {
+
+    }
+
+    public void ListActivity() {
 
     }
 
@@ -123,6 +136,7 @@ public class InputHandler {
 
     }
 
+
     public void DeleteGoal(int activityID, int exerciseID){
 
     }
@@ -131,7 +145,20 @@ public class InputHandler {
 
     public void DeleteActivity(String name) {
 
+
     }
+
+    // ---- WORKOUT ----
+    public void CreateTemplate(String name) {
+
+    }
+
+    public void ListTemplate() {}
+
+    public void StartWorkout() {}
+
+    public void StartWorkout(String template) {}
+
 
     public void SetState(InputHandlerState newState) {
 
@@ -164,7 +191,7 @@ public class InputHandler {
                     "CreateTemplate [Name]- Create a new workout template\n" +
                     "ListTemplate - List all workouts\n" +
                     "DeleteTemplate [Name] - Delete a existing workout template\n" +
-                    "StartWorkout - Start new workout\n" +
+                    "StartWorkout [Template(Optional)] - Start new workout\n" +
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
                 );
@@ -176,7 +203,6 @@ public class InputHandler {
                     "Create [ActivityID] [ExerciseID]- Create a new goal for the given activity in exercise\n" +
                     "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
                     "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
-
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
                 );
