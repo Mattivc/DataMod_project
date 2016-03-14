@@ -32,30 +32,21 @@ public class InputHandler {
             case ACTIVITY:
                 switch (cmd) {
                     case "create":
-                        if (input.length == 3) {
+                        if (NumArgs(input, 3)) {
                             CreateActivity(input[1], input[2]);
-                        } else {
-                            System.out.println("Wrong number of arguments");
-                            SetState(this.state);
-                        }
-                        break;
+                        } break;
                     case "list":
-                        if (input.length == 1) {
+                        if (NumArgs(input, 1)) {
                             //CreateActivity(input[1], input[2]);
-                        } else {
-                            System.out.println("Wrong number of arguments");
-                            SetState(this.state);
                         }
                     case "delete":
-                        if (input.length == 2) {
+                        if (NumArgs(input, 2)) {
                             DeleteActivity(input[1]);
-                        } else {
-                            System.out.println("Wrong number of arguments");
-                            SetState(this.state);
-                        }
-                        break;
+                        } break;
                     case "back":
-                        SetState(InputHandlerState.MAIN);
+                        if (NumArgs(input, 1)) {
+                            SetState(InputHandlerState.MAIN);
+                        } break;
                     default:
                         System.out.println("Invalid command: " + cmd);
                         break;
@@ -63,7 +54,25 @@ public class InputHandler {
                 break;
 
             case WORKOUT:
+                switch (cmd) {
+                    case "createtemplate":
+                        if (NumArgs(input, 2)) {
 
+                        } break;
+                    case "listtemplate":
+                        if (NumArgs(input, 1)) {
+
+                        } break;
+                    case "deletetemplate":
+                        if (NumArgs(input, 2)) {
+
+                        } break;
+                    case "startworkout":
+                        break;
+                    default:
+                        System.out.println("Invalid command: " + cmd);
+                        break;
+                }
                 break;
             case GOAL:
 
@@ -71,6 +80,16 @@ public class InputHandler {
         }
 
         return false;
+    }
+
+    public boolean NumArgs(String[] input, int n) {
+        if (input.length == n) {
+            return true;
+        } else {
+            System.out.println("Wrong number of arguments");
+            SetState(this.state);
+            return false;
+        }
     }
 
     public void CreateActivity(String name, String description) {
