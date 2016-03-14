@@ -18,6 +18,12 @@ public class InputHandler {
                     case "activity":
                         SetState(InputHandlerState.ACTIVITY);
                         break;
+                    case "goal":
+                        SetState(InputHandlerState.GOAL);
+                        break;
+                    case "workout":
+                        SetState(InputHandlerState.WORKOUT);
+                        break;
                     default:
                         System.out.println("Invalid command: " + cmd);
                         break;
@@ -33,6 +39,13 @@ public class InputHandler {
                             SetState(this.state);
                         }
                         break;
+                    case "list":
+                        if (input.length == 1) {
+                            //CreateActivity(input[1], input[2]);
+                        } else {
+                            System.out.println("Wrong number of arguments");
+                            SetState(this.state);
+                        }
                     case "delete":
                         if (input.length == 2) {
                             DeleteActivity(input[1]);
@@ -49,6 +62,9 @@ public class InputHandler {
                 }
                 break;
 
+            case WORKOUT:
+
+                break;
             case GOAL:
 
                 break;
@@ -70,19 +86,38 @@ public class InputHandler {
         switch (newState){
             case MAIN:
                 System.out.print(
-                "-----------------------------------------------\n" +
-                "Main Commands: \n" +
-                "Activity  - Enter Activity menu\n" +
-                "-----------------------------------------------\n");
+                    "-----------------------------------------------\n" +
+                    "Main Commands: \n" +
+                    "Activity  - Enter Activity menu\n" +
+                    "Goal - Enter Goal menu\n" +
+                    "Workout - Enter Workout menu" +
+                    "-----------------------------------------------\n"
+                );
                 break;
             case ACTIVITY:
                 System.out.print(
-                "-----------------------------------------------\n" +
-                "Activity Commands: \n" +
-                "Create [Name] [Description] - Create a new activity\n" +
-                "Delete [Name] - Delete a existing activity\n" +
-                "Back - Return to main menu\n" +
-                "-----------------------------------------------\n");
+                    "-----------------------------------------------\n" +
+                    "Activity Commands: \n" +
+                    "Create [Name] [Description] - Create a new activity\n" +
+                    "List - List all goals\n" +
+                    "Delete [Name] - Delete a existing activity\n" +
+                    "Back - Return to main menu\n" +
+                    "-----------------------------------------------\n"
+                );
+                break;
+            case WORKOUT:
+                System.out.print(
+                    "-----------------------------------------------\n" +
+                    "Workout Commands: \n" +
+                    "CreateTemplate [Name]- Create a new workout template\n" +
+                    "ListTemplate - List all workouts\n" +
+                    "DeleteTemplate [Name] - Delete a existing workout template\n" +
+                    "StartWorkout - Start new workout\n" +
+                    "Back - Return to main menu\n" +
+                    "-----------------------------------------------\n"
+                );
+                break;
+            case GOAL:
                 break;
         }
 
