@@ -58,7 +58,7 @@ CREATE TABLE RESULTAT   (
 CREATE TABLE MÅL   (
     ØvelseID        INT        NOT NULL,
     TreningsØktID   INT        NOT NULL,
-    Dato            DATE       NOT NULL,
+    Dato            DATE,
     Oppnådd	BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY(ØvelseID, TreningsØktID),
     FOREIGN KEY(ØvelseID)        REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE,
