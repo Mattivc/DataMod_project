@@ -1,10 +1,34 @@
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
+import javax.swing.plaf.nimbus.State;
 import javax.xml.transform.Result;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.HashMap;
 
 
-public abstract class Goal {
+public class Goal {
+
+
+    int activityID, exerciseID;
+    Date date;
+    Boolean completed;
+
+
+    public Goal(int activityID, int exerciseID, Date date, Boolean completed) {
+        this.activityID = activityID;
+        this.exerciseID = exerciseID;
+        this.date = date;
+        this.completed = completed;
+    }
+
+    @Override
+    public String toString() {
+        return this.activityID + " " + this.exerciseID + " " + this.date + " " + this.completed;
+    }
+
 
     public static Boolean create(Connection con, int activityID, int exerciseID, java.util.Date date) {
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
@@ -28,6 +52,27 @@ public abstract class Goal {
 
     }
 
+    public static ArrayList<Goal> getAll(Connection con) {
+
+        try {
+
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM MÅL");
+            ArrayList<Goal> list = new ArrayList<>();
+            int index = 0;
+            while (rs.next()){
+                list.add(new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"), rs.getDate("Dato"),
+                        rs.getBoolean("Oppnådd")));
+            }
+            return list;
+
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
 
 
     public static void main(String[] args){
@@ -42,7 +87,7 @@ public abstract class Goal {
         try {
             con = DriverManager.getConnection(url, user, password);
             st = con.createStatement();
-            Goal.create(con,1,2,new Date(200, 3, 23));
+            System.out.print(Goal.getAll(con));
 
         } catch (SQLException ex) {
             ex.printStackTrace();
