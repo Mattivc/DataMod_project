@@ -79,7 +79,7 @@ CREATE TABLE KONDISJON (
     ØvelseID            INT    NOT NULL,
     TreningsØktID       INT    NOT NULL,
     Lengde              FLOAT,
-    Tid                 TIME,
+    Tid                 FLOAT,
     FOREIGN KEY(ØvelseID)         REFERENCES RESULTAT(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY(TreningsØktID)    REFERENCES RESULTAT(TreningsØktID) ON DELETE CASCADE ON UPDATE CASCADE
 );
