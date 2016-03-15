@@ -1,8 +1,11 @@
 import javafx.scene.layout.Pane;
 
+import java.sql.Connection;
 import java.util.Date;
 
 public class InputHandler {
+
+    Connection con;
 
     public InputHandler() {
         this.SetState(InputHandlerState.MAIN);
@@ -100,7 +103,7 @@ public class InputHandler {
                     case "reach":
                         if (NumArgs(input, 3)){
                             ReachGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]), input[3].equalsIgnoreCase("yes"));
-                        }
+                        } break;
                     case "delete":
                         if (NumArgs(input, 2)){
                             DeleteGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
@@ -136,11 +139,19 @@ public class InputHandler {
 
     }
 
+    public void DeleteActivity(String name) {
+
+
+    }
+
     public void ListActivity() {
 
     }
 
+
+    // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
+        Goal.create(con, activityID, exerciseID);
 
     }
 
@@ -155,10 +166,7 @@ public class InputHandler {
 
 
 
-    public void DeleteActivity(String name) {
 
-
-    }
 
     // ---- WORKOUT ----
     public void CreateTemplate(String name) {
