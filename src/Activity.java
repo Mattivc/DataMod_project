@@ -1,7 +1,21 @@
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Activity {
+
+    int ID;
+    String name, description;
+    Integer replacement, groupID;
+
+    public Activity(int ID, String name, String description, Integer replacement, Integer groupID) {
+        this.ID = ID;
+        this.name = name;
+        this.description = description;
+        this.replacement = replacement;
+        this.groupID = groupID;
+    }
+
 
     public static boolean add(Connection connection, String name, String description, Integer replacement, Integer group) {
         try {
@@ -41,5 +55,57 @@ public class Activity {
 
         return true;
     }
+
+    public static ArrayList getAll(Connection con) {
+        try {
+
+            PreparedStatement post = con.prepareStatement("SELECT * FROM ØVELSE");
+            ResultSet rs = post.executeQuery();
+
+            ArrayList activities = new ArrayList();
+            while (rs.next()) {
+
+                int ID = Integer.parseInt(rs.getString("ØvelseID"));
+                String name = rs.getString("Navn");
+                String description = rs.getString("Erstatning");
+                Integer replacement = rs.getInt("Erstatning");
+                Integer groupID = rs.getInt("GruppeID");
+
+                Activity act = new Activity(ID, name, description, replacement, groupID);
+                activities.add(act);
+            }
+
+            return activities;
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static void main(String[] args){
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
+        String user = "user";
+        String password = "12345678";
+
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            Activity.getAll(con);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+
+        }
+
+    }
+
+
 
 }

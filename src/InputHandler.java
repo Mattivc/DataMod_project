@@ -150,17 +150,19 @@ public class InputHandler {
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
-        //Goal goal = Goal.create(con, activityID, exerciseID);
+        Goal.create(con, activityID, exerciseID);
 
     }
 
     public void ReachGoal(int activityID, int exerciseID, boolean reached){
-
+        if (reached) {
+            Goal.setAsCompleted(this.con, activityID, exerciseID);
+        }
     }
 
 
     public void DeleteGoal(int activityID, int exerciseID){
-
+        //Goal.delete(activityID, exerciseID);
     }
 
 
