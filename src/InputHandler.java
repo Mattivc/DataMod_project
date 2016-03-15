@@ -226,7 +226,13 @@ public class InputHandler {
     public void DeleteGoal(int activityID, int exerciseID){
         //Goal.delete(this.con, activityID, exerciseID);
     }
-    
+
+    // ---- RESULT ---
+    // TODO
+
+
+
+
 
     // ---- WORKOUT ----
 

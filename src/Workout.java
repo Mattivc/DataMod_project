@@ -121,7 +121,7 @@ public class Workout {
 
     public static ArrayList<Workout> getAllTemplates(Connection con){
         ArrayList<Workout> list = new ArrayList<>();
-        //TODO
+        //TODO (hvis vi ønsker å implementere dette)
         return list;
     }
 

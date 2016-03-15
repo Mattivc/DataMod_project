@@ -39,7 +39,7 @@ public class ActivityGroup {
 
     public static ArrayList<Activity> getAll(Connection con, String name){
         ArrayList<Activity> list = new ArrayList<>();
-        //TODO
+        //TODO (hvis vi ønsker å implementere dette)
         return list;
     }
 
