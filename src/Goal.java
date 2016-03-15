@@ -58,7 +58,6 @@ public class Goal {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM MÅL");
             ArrayList<Goal> list = new ArrayList<>();
-            int index = 0;
             while (rs.next()){
                 list.add(new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"), rs.getDate("Dato"),
                         rs.getBoolean("Oppnådd")));
@@ -72,16 +71,39 @@ public class Goal {
         }
     }
 
-    public static Boolean setAsCompleted(Connection con, int activityID, int exerciseID) {
+    public static Goal get(Connection con, int activityID, int exerciseID) {
         try {
             Statement st = con.createStatement();
-            st.executeUpdate("UPDATE MÅL SET Oppnådd = true WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+exerciseID+"");
+            ResultSet rs = st.executeQuery("SELECT * FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+exerciseID+"");
+            if (rs.next()) {
+                return new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"), rs.getDate("Dato"), rs.getBoolean("Oppnådd"));
+            }
+            else {
+                return null;
+            }
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static Boolean setAsCompleted(Connection con, int activityID, int exerciseID) {
+        try {
+            Date date = new Date();
+            System.out.print(date);
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            con.createStatement().executeUpdate("UPDATE MÅL SET Oppnådd = true, Dato = "+sqlDate+" WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+exerciseID+"");
             return true;
         }
         catch (java.sql.SQLException ex) {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    public static Boolean setAsCompleted(Connection con, Goal goal) {
+        return setAsCompleted(con, goal.activityID, goal.exerciseID);
     }
 
 
@@ -97,8 +119,7 @@ public class Goal {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
-            System.out.print(Goal.setAsCompleted(con, 1, 2));
+            Goal.create(con, 1, 1);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
