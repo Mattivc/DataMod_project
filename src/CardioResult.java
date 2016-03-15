@@ -9,7 +9,7 @@ public class CardioResult extends Result {
     Time time;
 
     public CardioResult(int activityID, int exerciseID, float length, Time time) {
-        super(activityID, exerciseID);
+        //super(activityID, exerciseID);
         this.lenght = length;
         this.time = time;
     }

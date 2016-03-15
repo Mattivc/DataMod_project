@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS Trening;
 USE Trening;
 
 DROP USER IF EXISTS 'user'@'localhost';
-CREATE USER 'user'@'localhost' IDENTIFIED BY '12345678';
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'Ab#12345678';
 GRANT ALL PRIVILEGES ON Trening.* TO 'user'@'localhost';
 FLUSH PRIVILEGES;
 

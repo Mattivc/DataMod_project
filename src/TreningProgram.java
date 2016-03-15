@@ -13,7 +13,7 @@ public class TreningProgram {
 
         String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
         String user = "user";
-        String password = "12345678";
+        String password = "Ab#12345678";
 
         try {
             con = DriverManager.getConnection(url, user, password);

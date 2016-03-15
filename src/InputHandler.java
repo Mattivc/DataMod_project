@@ -2,7 +2,9 @@ import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -241,6 +243,44 @@ public class InputHandler {
         Workout.deleteWorkoutTemplate(this.con, Integer.parseInt(workoutID));
     }
 
+    public ArrayList<Integer> GetActivitiesFromUser() {
+
+        ArrayList<Integer> inputActivities = new ArrayList<>();
+        ArrayList<Activity> dbActivities = Activity.getAll(con);
+
+        System.out.println("Add workout:");
+
+        for (Activity activity: dbActivities) {
+            String ID = Integer.toString(activity.ID);
+            String name = activity.name;
+
+            System.out.print(name + ": " + ID + ", ");
+        }
+
+
+        Scanner scanner = new Scanner(System.in);
+
+
+        while (true) {
+            System.out.println("Input activity ID or write done");
+
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+
+            try {
+                int inputID = Integer.parseInt(input);
+                inputActivities.add((Integer)inputID);
+            } catch (NumberFormatException ex) {
+                System.out.println("Invalid input");
+            }
+        }
+
+
+        return  inputActivities;
+    }
+
     public void StartWorkout() {
         Scanner scanner = new Scanner(System.in);
 
@@ -252,6 +292,7 @@ public class InputHandler {
 
 
             java.sql.Date date = null;
+            Integer shape = null;
             Integer performance = null;
             String notes = null;
             Integer spectators = null;
@@ -272,6 +313,16 @@ public class InputHandler {
                     } catch (ParseException ex) {
                         System.out.println("Invalid input");
                     }
+                }
+            }
+
+            while (shape == null) {
+                System.out.println("Input shape (0-10): ");
+                input = scanner.nextLine();
+                try {
+                    shape = Integer.parseInt(input);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input: " + input);
                 }
             }
 
@@ -312,7 +363,9 @@ public class InputHandler {
                     airQuality = scanner.nextLine();
                 }
 
-                // CALL WORKOUT HERE
+
+                ArrayList<Integer> activityList = GetActivitiesFromUser();
+                Workout.createIndoor(con, activityList, date, shape, performance, notes, spectators, airQuality);
                 return;
             } else if(input.equalsIgnoreCase("outdoor")) {
 
@@ -335,7 +388,8 @@ public class InputHandler {
 
                 }
 
-                // CALL WORKOUT HERE
+                ArrayList<Integer> activityList = GetActivitiesFromUser();
+                Workout.createOutdoor(con, activityList, date, shape, performance, notes, spectators, weather, temp);
                 return;
             } else {
                 System.out.println("Invalid input: " + input);
