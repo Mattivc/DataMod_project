@@ -102,9 +102,11 @@ public class Goal {
     public static Boolean setAsCompleted(Connection con, int activityID, int exerciseID) {
         try {
             Date date = new Date();
-            System.out.print(date);
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            con.createStatement().executeUpdate("UPDATE MÅL SET Oppnådd = true, Dato = "+sqlDate+" WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+exerciseID+"");
+            PreparedStatement st = con.prepareStatement("UPDATE MÅL SET Oppnådd=?, Dato=? WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+exerciseID+"");
+            st.setBoolean(1, true);
+            st.setDate(2, sqlDate);
+            st.execute();
             return true;
         }
         catch (java.sql.SQLException ex) {
@@ -130,7 +132,7 @@ public class Goal {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            Goal goal = Goal.create(con, 1,1);
+            Goal.setAsCompleted(con, 1, 1);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
