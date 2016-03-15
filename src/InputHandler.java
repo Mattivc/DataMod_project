@@ -185,11 +185,12 @@ public class InputHandler {
     
 
     // ---- WORKOUT ----
-    public void CreateTemplate(String name) {
+
+    public void ListTemplate() {
+
 
     }
 
-    public void ListTemplate() {}
 
     public void DeleteTemplate(String name) {
 
@@ -278,10 +279,10 @@ public class InputHandler {
                 System.out.print(
                     "-----------------------------------------------\n" +
                     "Workout Commands: \n" +
-                    "CreateTemplate [Name]- Create a new workout template\n" +
-                    "ListTemplate - List all workouts\n" +
-                    "DeleteTemplate [Name] - Delete a existing workout template\n" +
                     "StartWorkout [Template(Optional)] - Start new workout\n" +
+                    "ListTemplate - List all workouts\n" +
+                    "ListActivities [Name] - List all activities in a template\n" +
+                    "DeleteTemplate [Name] - Delete a existing workout template\n" +
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
                 );
