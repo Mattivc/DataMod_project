@@ -1,14 +1,12 @@
 
-import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
-
 import java.sql.*;
 import java.util.ArrayList;
 
 public class Workout {
 
-    public static boolean createOutdoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int specktators, String weather, Float temp) {
+    public static boolean createOutdoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
 
-        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, specktators, null);
+        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, null);
 
         try {
             PreparedStatement post = connection.prepareStatement("INSERT INTO UTENDØRS (TreningsØktID, Vær, Temp) VALUES (?, ?, ?)");
@@ -26,15 +24,15 @@ public class Workout {
     }
 
 
-    public static boolean createOutdoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int specktators, String weather, Float temp) {
+    public static boolean createOutdoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
         ArrayList<Integer> activities = Workout.getActivitiesFromWorkout(connection, template);
-        return Workout.createOutdoor(connection, activities, date, shape, performance, notes, specktators, weather, temp);
+        return Workout.createOutdoor(connection, activities, date, shape, performance, notes, spectators, weather, temp);
     }
 
 
-    public static boolean createIndoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int specktators, String airQuality) {
+    public static boolean createIndoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
 
-        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, specktators, null);
+        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, null);
 
         try {
             PreparedStatement post = connection.prepareStatement("INSERT INTO INNENDØRS (TreningsØktID, Luftkvalitet) VALUES (?, ?)");
@@ -48,9 +46,9 @@ public class Workout {
         }
     }
 
-    public static boolean createIndoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int specktators, String airQuality) {
+    public static boolean createIndoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
         ArrayList<Integer> activities = Workout.getActivitiesFromWorkout(connection, template);
-        return Workout.createIndoor(connection, activities, date, shape, performance, notes, specktators, airQuality);
+        return Workout.createIndoor(connection, activities, date, shape, performance, notes, spectators, airQuality);
     }
 
 
@@ -74,7 +72,7 @@ public class Workout {
         return activities;
     }
 
-    private static Integer createWorkout(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int specktators, Integer template) {
+    private static Integer createWorkout(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, Integer template) {
 
         // Makes a workout entry and returns the primary key
         // The primary key is used to make outdoor and indoor entries
@@ -85,7 +83,7 @@ public class Workout {
             workoutPost.setInt(2, shape);
             workoutPost.setInt(3, performance);
             workoutPost.setString(4, notes);
-            workoutPost.setInt(5, specktators);
+            workoutPost.setInt(5, spectators);
 
             if (template == null) {
                 workoutPost.setNull(6, 0);
@@ -145,12 +143,11 @@ public class Workout {
             java.util.Date utilDate = new java.util.Date();
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
             ArrayList<Integer> activities = new ArrayList<Integer>();
-            activities.add(3);
-            activities.add(6);
-            //Workout.createOutdoor(con, activities, sqlDate, 4, 4, "Notes", 0, "Pretty good", (float)22.1);
+            activities.add(1);
+            Workout.createOutdoor(con, activities, sqlDate, 4, 4, "Notes", 0, "Pretty good", (float)22.1);
             //Workout.createIndoor(con, activities, sqlDate, 2, 6, "Notes", 0, "Good");
 
-            Workout.createOutdoorFromTemplate(con, 25, sqlDate, 4, 4, "Notes", 0, "Ok weather", (float)20.0);
+            //Workout.createOutdoorFromTemplate(con, 25, sqlDate, 4, 4, "Notes", 0, "Ok weather", (float)20.0);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
