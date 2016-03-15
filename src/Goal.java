@@ -30,16 +30,15 @@ public class Goal {
     }
 
 
-    public static Boolean create(Connection con, int activityID, int exerciseID, java.util.Date date) {
-        java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+    public static Boolean create(Connection con, int activityID, int exerciseID) {
+
 
         try {
 
-            PreparedStatement st = con.prepareStatement("INSERT INTO MÅL VALUES (?,?,?,?)");
+            PreparedStatement st = con.prepareStatement("INSERT INTO MÅL VALUES (?,?,?)");
             st.setInt(1, activityID);
             st.setInt(2, exerciseID);
-            st.setDate(3, sqlDate);
-            st.setBoolean(4, false);
+            st.setBoolean(3, false);
             st.execute();
 
         }
