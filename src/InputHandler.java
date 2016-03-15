@@ -1,8 +1,11 @@
 import javafx.scene.layout.Pane;
 
+import java.sql.Connection;
 import java.util.Date;
 
 public class InputHandler {
+
+    Connection con;
 
     public InputHandler() {
         this.SetState(InputHandlerState.MAIN);
@@ -136,7 +139,7 @@ public class InputHandler {
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
-        
+        Goal.create(con, activityID, exerciseID);
 
     }
 
