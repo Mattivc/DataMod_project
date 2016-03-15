@@ -2,7 +2,7 @@ import java.sql.Connection;
 
 public class InputHandler {
 
-    Connection con;
+    Connection con; //temprorary
 
     public InputHandler(Connection con) {
         this.SetState(InputHandlerState.MAIN);
@@ -149,7 +149,7 @@ public class InputHandler {
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
-        Goal.create(con, activityID, exerciseID);
+        Goal goal = Goal.create(con, activityID, exerciseID);
 
     }
 
