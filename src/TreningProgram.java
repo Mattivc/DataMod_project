@@ -1,5 +1,9 @@
 import java.sql.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class TreningProgram {
@@ -20,13 +24,27 @@ public class TreningProgram {
             Scanner scanner = new Scanner(System.in);
             InputHandler inputHandler = new InputHandler();
 
+
+
             while (true) {
                 System.out.print("cmd: ");
-                String[] input = scanner.nextLine().split(" +");
+                String input = scanner.nextLine();
 
-                assert input.length >= 1: "Invalid command";
+                Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(input);
+                List<String> inputCommands = new LinkedList<>();
 
-                if (inputHandler.HandleInput(input)) { break; }
+                while (m.find()) {
+                    inputCommands.add(m.group(1).replace("\"", ""));
+                }
+
+                for (String s: inputCommands) {
+                    System.out.print(s + "|");
+                }
+                System.out.print("\n");
+
+                assert inputCommands.size() >= 1: "Invalid command";
+
+                if (inputHandler.HandleInput(inputCommands.toArray(new String[inputCommands.size()]))) { break; }
             }
 
         } catch (SQLException ex) {

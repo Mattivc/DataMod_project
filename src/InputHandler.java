@@ -1,8 +1,11 @@
 import javafx.scene.layout.Pane;
 
+import java.sql.Connection;
 import java.util.Date;
 
 public class InputHandler {
+
+    Connection con;
 
     public InputHandler() {
         this.SetState(InputHandlerState.MAIN);
@@ -17,18 +20,22 @@ public class InputHandler {
         switch (this.state) {
             case MAIN:
                 switch (cmd) {
-                    case "activity":
+                    case "activity": {
                         SetState(InputHandlerState.ACTIVITY);
-                        break;
-                    case "goal":
+                    } break;
+                    case "goal": {
                         SetState(InputHandlerState.GOAL);
-                        break;
-                    case "workout":
+                    } break;
+                    case "workout": {
                         SetState(InputHandlerState.WORKOUT);
-                        break;
-                    default:
+                    } break;
+                    case "quit": {
+                        System.out.println("Goodbye.");
+                        return true;
+                    }
+                    default: {
                         System.out.println("Invalid command: " + cmd);
-                        break;
+                    } break;
                 }
                 break;
             case ACTIVITY:
@@ -78,6 +85,10 @@ public class InputHandler {
                             System.out.println("Wrong number of arguments");
                             SetState(this.state);
                         }
+                    case "back":
+                        if (NumArgs(input, 1)) {
+                            SetState(InputHandlerState.MAIN);
+                        } break;
                     default:
                         System.out.println("Invalid command: " + cmd);
                         break;
@@ -96,6 +107,10 @@ public class InputHandler {
                     case "delete":
                         if (NumArgs(input, 2)){
                             DeleteGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
+                        }
+                    case "back":
+                        if (NumArgs(input, 1)) {
+                            SetState(InputHandlerState.MAIN);
                         } break;
                     default:
                         System.out.println("Invalid command: " + cmd);
@@ -136,7 +151,7 @@ public class InputHandler {
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
-        
+        Goal.create(con, activityID, exerciseID);
 
     }
 
@@ -160,7 +175,13 @@ public class InputHandler {
 
     public void ListTemplate() {}
 
-    public void StartWorkout() {}
+    public void DeleteTemplate(String name) {
+
+    }
+
+    public void StartWorkout() {
+
+    }
 
     public void StartWorkout(String template) {}
 
@@ -174,7 +195,8 @@ public class InputHandler {
                     "Main Commands: \n" +
                     "Activity  - Enter Activity menu\n" +
                     "Goal - Enter Goal menu\n" +
-                    "Workout - Enter Workout menu" +
+                    "Workout - Enter Workout menu\n" +
+                    "Quit - Exit program\n" +
                     "-----------------------------------------------\n"
                 );
                 break;
