@@ -231,7 +231,7 @@ public class InputHandler {
     // ---- WORKOUT ----
 
     public void ListTemplate() {
-        Workout.getAll(this.con);
+        Workout.getAllTemplates(this.con);
     }
 
     public void ListTemplateActivities(String workoutID){
