@@ -59,7 +59,7 @@ public class Goal {
             ResultSet rs = st.executeQuery("SELECT * FROM MÅL");
             ArrayList<Goal> list = new ArrayList<>();
             while (rs.next()){
-                list.add(new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"), rs.getDate("Dato"),
+                list.add(new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"),
                         rs.getBoolean("Oppnådd")));
             }
             return list;
@@ -76,7 +76,7 @@ public class Goal {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+exerciseID+"");
             if (rs.next()) {
-                return new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"), rs.getDate("Dato"), rs.getBoolean("Oppnådd"));
+                return new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"),  rs.getBoolean("Oppnådd"));
             }
             else {
                 return null;
