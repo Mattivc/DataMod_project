@@ -92,11 +92,11 @@ public class InputHandler {
                     case "reach":
                         if (NumArgs(input, 3)){
                             ReachGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]), input[3].equalsIgnoreCase("yes"));
-                        }
+                        } break;
                     case "delete":
                         if (NumArgs(input, 2)){
                             DeleteGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
-                        }
+                        } break;
                     default:
                         System.out.println("Invalid command: " + cmd);
                         break;
@@ -124,11 +124,19 @@ public class InputHandler {
 
     }
 
+    public void DeleteActivity(String name) {
+
+
+    }
+
     public void ListActivity() {
 
     }
 
+
+    // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
+        
 
     }
 
@@ -143,10 +151,7 @@ public class InputHandler {
 
 
 
-    public void DeleteActivity(String name) {
 
-
-    }
 
     // ---- WORKOUT ----
     public void CreateTemplate(String name) {
