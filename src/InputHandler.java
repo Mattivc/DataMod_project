@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class InputHandler {
 
-    Connection con;
+    Connection con; //temprorary
 
     public InputHandler() {
         this.SetState(InputHandlerState.MAIN);
