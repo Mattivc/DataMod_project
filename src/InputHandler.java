@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -169,7 +170,7 @@ public class InputHandler {
     }
 
     public void DeleteGoal(int activityID, int exerciseID){
-        Goal.delete(this.con, activityID, exerciseID);
+        //Goal.delete(this.con, activityID, exerciseID);
     }
 
 
@@ -188,10 +189,38 @@ public class InputHandler {
     }
 
     public void StartWorkout() {
-        System.out.print(
-                "------------------ Workout Wizard ----------------\n"
-        );
         Scanner scanner = new Scanner(System.in);
+
+        System.out.print(
+                "------------------ Create Workout ----------------\n"
+        );
+
+        while (true) {
+            System.out.println("Indoor or outdoor?");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("indoor")) {
+
+                Date date;
+                int performance;
+                String notes;
+                int spectators;
+                String airQuality;
+
+
+
+                return;
+            } else if(input.equalsIgnoreCase("outdoor")) {
+
+
+                return;
+            } else {
+                System.out.println("Invalid input: " + input);
+            }
+        }
+
+
+
         System.out.println(scanner.nextInt());
     }
 
