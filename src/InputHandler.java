@@ -41,8 +41,13 @@ public class InputHandler {
                 switch (cmd) {
                     case "create":
                         if (NumArgs(input, 3)) {
-                            CreateActivity(input[1], input[2]);
-                        } break;
+                            CreateActivity(input[1], input[2], null, null);
+                        } else if (NumArgs(input, 4)) {
+                            CreateActivity(input[1], input[2], input[3], null);
+                        } else if (NumArgs(input, 5)) {
+                            CreateActivity(input[1], input[2], input[3], input[4]);
+                        break;
+                    }
                     case "list":
                         if (NumArgs(input, 1)) {
                             ListActivity();
@@ -137,9 +142,10 @@ public class InputHandler {
     }
 
 
-    // ----- ACTIVITY ----
-    public void CreateActivity(String name, String description) {
 
+    // ----- ACTIVITY ----
+    public void CreateActivity(String name, String description, String replacement, String group ) {
+        Activity.add(this.con, name, description, Integer.parseInt(replacement), Integer.parseInt(group));
     }
 
     public void DeleteActivity(String name) {
@@ -216,7 +222,7 @@ public class InputHandler {
                 System.out.print(
                     "-----------------------------------------------\n" +
                     "Activity Commands: \n" +
-                    "Create [Name] [Description] - Create a new activity\n" +
+                    "Create [Name] [Description] (Replacement) (Group)- Create a new activity\n" +
                     "List - List all goals\n" +
                     "Delete [Name] - Delete a existing activity\n" +
                     "Back - Return to main menu\n" +
