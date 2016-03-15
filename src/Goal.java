@@ -62,6 +62,17 @@ public class Goal {
 
     }
 
+    public static Boolean delete(Connection con, int activityID, int exerciseID) {
+
+        try {
+            con.createStatement().execute("DELETE FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+exerciseID+"");
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     public static ArrayList<Goal> getAll(Connection con) {
 
         try {
@@ -132,7 +143,7 @@ public class Goal {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            Goal.setAsCompleted(con, 1, 1);
+            Goal.delete(con, 1, 1);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
