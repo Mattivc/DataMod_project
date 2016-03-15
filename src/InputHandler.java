@@ -137,16 +137,23 @@ public class InputHandler {
             case ACTIVITYGROUP:
                 switch (cmd) {
                     case "create": {
-
+                        if (NumArgs(input, 2)){
+                            CreateActivityGroup(input[1], null);
+                        } else if (NumArgs(input, 3)){
+                            CreateActivityGroup(input[1],input[2]);
+                        }
                     } break;
                     case "list ": {
-
+                        if (NumArgs(input, 1)) {
+                            ListGroupActivities(input[1]);
+                        }
                     } break;
                     case "delete": {
-
+                        if (NumArgs(input, 1)){
+                            DeleteActivityGroup(input[1]);
+                        }
                     } break;
                     case "back": {
-
                     }
                     default: {
                         System.out.println("Invalid command: " + cmd);
@@ -184,8 +191,19 @@ public class InputHandler {
         Activity.removeWhereNameLike(this.con, name);
     }
 
+    // ---- ActivityGroup ---
 
+    public void CreateActivityGroup(String name, String belongsToGroup){
+        ActivityGroup.create(this.con, name, Integer.parseInt(belongsToGroup));
+    }
 
+    public void ListGroupActivities(String name){
+        ActivityGroup.getAll(this.con, name);
+    }
+
+    public void DeleteActivityGroup(String name){
+        ActivityGroup.removeWhereNameLike(this.con, name);
+    }
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
