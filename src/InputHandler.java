@@ -1,14 +1,12 @@
-import javafx.scene.layout.Pane;
-
 import java.sql.Connection;
-import java.util.Date;
 
 public class InputHandler {
 
     Connection con;
 
-    public InputHandler() {
+    public InputHandler(Connection con) {
         this.SetState(InputHandlerState.MAIN);
+        this.con = con;
     }
 
     public InputHandlerState state;
@@ -46,7 +44,7 @@ public class InputHandler {
                         } break;
                     case "list":
                         if (NumArgs(input, 1)) {
-                            //CreateActivity(input[1], input[2]);
+                            ListActivity();
                         } break;
                     case "delete":
                         if (NumArgs(input, 2)) {

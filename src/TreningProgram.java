@@ -10,8 +10,6 @@ public class TreningProgram {
 
     public static void main(String[] args) {
         Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
 
         String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
         String user = "user";
@@ -19,10 +17,9 @@ public class TreningProgram {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
 
             Scanner scanner = new Scanner(System.in);
-            InputHandler inputHandler = new InputHandler();
+            InputHandler inputHandler = new InputHandler(con);
 
 
 
@@ -51,12 +48,6 @@ public class TreningProgram {
             ex.printStackTrace();
         } finally {
             try{
-                if (rs != null) {
-                    rs.close();
-                }
-                if (st != null) {
-                    st.close();
-                }
                 if (con != null) {
                     con.close();
                 }
