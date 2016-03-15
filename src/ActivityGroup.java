@@ -1,5 +1,6 @@
 
 import java.sql.*;
+import java.util.*;
 
 public class ActivityGroup {
 
@@ -35,4 +36,36 @@ public class ActivityGroup {
 
         return true;
     }
+
+
+
+    public static void main(String[] args){
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs = null;
+
+        String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
+        String user = "user";
+        String password = "12345678";
+
+        try {
+            con = DriverManager.getConnection(url, user, password);
+            ActivityGroup.create(con, "Benk", null);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+
+        }
+
+
+
+
+
+
+
+    }
+
+
+
 }
