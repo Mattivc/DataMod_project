@@ -155,13 +155,13 @@ public class InputHandler {
 
     public void ReachGoal(int activityID, int exerciseID, boolean reached){
         if (reached) {
-            Goal.get(this.con, activityID, exerciseID).setAsCompleted(this.con, activityID, exerciseID);
+            Goal.setAsCompleted(this.con, activityID, exerciseID);
         }
     }
 
 
     public void DeleteGoal(int activityID, int exerciseID){
-
+        //Goal.delete(activityID, exerciseID);
     }
 
 
