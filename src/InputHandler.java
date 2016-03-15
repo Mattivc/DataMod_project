@@ -238,8 +238,8 @@ public class InputHandler {
     }
 
 
-    public void DeleteTemplate(String name) {
-        //TODO
+    public void DeleteTemplate(String workoutID) {
+        Workout.deleteWorkoutTemplate(this.con, Integer.parseInt(workoutID));
     }
 
     public void StartWorkout() {
