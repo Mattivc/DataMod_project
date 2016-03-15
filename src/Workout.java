@@ -119,7 +119,7 @@ public class Workout {
 
     }
 
-    public static ArrayList<Workout> getAll(Connection con){
+    public static ArrayList<Workout> getAllTemplates(Connection con){
         ArrayList<Workout> list = new ArrayList<>();
         //TODO
         return list;
