@@ -21,8 +21,6 @@ public class TreningProgram {
             Scanner scanner = new Scanner(System.in);
             InputHandler inputHandler = new InputHandler(con);
 
-
-
             while (true) {
                 System.out.print("cmd: ");
                 String input = scanner.nextLine();

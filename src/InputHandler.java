@@ -1,8 +1,9 @@
 import java.sql.Connection;
+import java.util.Scanner;
 
 public class InputHandler {
 
-    Connection con; //temprorary
+    Connection con;
 
     public InputHandler(Connection con) {
         this.SetState(InputHandlerState.MAIN);
@@ -149,7 +150,7 @@ public class InputHandler {
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
-        Goal goal = Goal.create(con, activityID, exerciseID);
+        //Goal goal = Goal.create(con, activityID, exerciseID);
 
     }
 
@@ -178,7 +179,11 @@ public class InputHandler {
     }
 
     public void StartWorkout() {
-
+        System.out.print(
+                "------------------ Workout Wizard ----------------\n"
+        );
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(scanner.nextInt());
     }
 
     public void StartWorkout(String template) {}
