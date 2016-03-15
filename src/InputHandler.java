@@ -76,10 +76,14 @@ public class InputHandler {
                         if (NumArgs(input, 2)) {
 
                         } break;
-                    case "listtemplate":
+                    case "listtemplates":
                         if (NumArgs(input, 1)) {
 
                         } break;
+                    case "listactivities":
+                        if (NumArgs(input, 1)) {
+                            ListTemplateActivities(input[1]);
+                        }
                     case "deletetemplate":
                         if (NumArgs(input, 2)) {
 
@@ -191,6 +195,10 @@ public class InputHandler {
 
     }
 
+    public void ListTemplateActivities(String workoutID){
+        Workout.getActivitiesFromWorkout(this.con, Integer.parseInt(workoutID));
+    }
+
 
     public void DeleteTemplate(String name) {
 
@@ -280,7 +288,7 @@ public class InputHandler {
                     "-----------------------------------------------\n" +
                     "Workout Commands: \n" +
                     "StartWorkout [Template(Optional)] - Start new workout\n" +
-                    "ListTemplate - List all workouts\n" +
+                    "ListTemplates - List all workouts\n" +
                     "ListActivities [Name] - List all activities in a template\n" +
                     "DeleteTemplate [Name] - Delete a existing workout template\n" +
                     "Back - Return to main menu\n" +
