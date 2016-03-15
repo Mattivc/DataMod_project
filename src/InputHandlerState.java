@@ -1,4 +1,4 @@
 
 public enum InputHandlerState {
-    MAIN, ACTIVITY, GOAL, WORKOUT
+    MAIN, ACTIVITY, GOAL, WORKOUT, ACTIVITYGROUP
 }
