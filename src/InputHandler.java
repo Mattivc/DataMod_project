@@ -134,6 +134,26 @@ public class InputHandler {
 
                 }
                 break;
+            case ACTIVITYGROUP:
+                switch (cmd) {
+                    case "create": {
+
+                    } break;
+                    case "list ": {
+
+                    } break;
+                    case "delete": {
+
+                    } break;
+                    case "back": {
+
+                    }
+                    default: {
+                        System.out.println("Invalid command: " + cmd);
+                    } break;
+                }
+                break;
+
         }
 
         return false;
@@ -191,7 +211,7 @@ public class InputHandler {
     // ---- WORKOUT ----
 
     public void ListTemplate() {
-
+        //TODO
 
     }
 
@@ -201,7 +221,7 @@ public class InputHandler {
 
 
     public void DeleteTemplate(String name) {
-
+        //TODO
     }
 
     public void StartWorkout() {
@@ -266,6 +286,7 @@ public class InputHandler {
                     "-----------------------------------------------\n" +
                     "Main Commands: \n" +
                     "Activity  - Enter Activity menu\n" +
+                    "ActivityGroup - Enter ActivityGroup menu\n" +
                     "Goal - Enter Goal menu\n" +
                     "Workout - Enter Workout menu\n" +
                     "Quit - Exit program\n" +
@@ -303,6 +324,17 @@ public class InputHandler {
                     "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
                     "List - List all goals\n" +
                     "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
+                    "Back - Return to main menu\n" +
+                    "-----------------------------------------------\n"
+                );
+                break;
+            case ACTIVITYGROUP:
+                System.out.print(
+                    "-----------------------------------------------\n" +
+                    "ActivityGroup Commands: \n" +
+                    "Create [Name] (Group)- Create a new group, optionally belonging to another group\n" +
+                    "List [name] - List existing ActivityGroups\n" +
+                    "Delete [Name] - Delete an existing ActivityGroup\n" +
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
                 );
