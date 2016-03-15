@@ -153,7 +153,7 @@ public class InputHandler {
     }
 
     public void ListActivity() {
-        Activity.getAll(this.con);
+        //Activity.getAll(this.con);
     }
 
     public void DeleteActivity(String name) {
@@ -203,42 +203,93 @@ public class InputHandler {
         );
 
         while (true) {
-            System.out.println("Indoor or outdoor?");
-            String input = scanner.nextLine();
 
-            if (input.equalsIgnoreCase("indoor")) {
 
-                java.sql.Date date = null;
-                Integer performance = null;
-                String notes = null;
-                Integer spectators = null;
-                String airQuality = null;
+            java.sql.Date date = null;
+            Integer performance = null;
+            String notes = null;
+            Integer spectators = null;
 
-                while (date == null) {
-                    System.out.println("Date in format(DD.MM.YYYY-HH:MM) or (now)");
-                    input = scanner.nextLine();
-                    if (input.equalsIgnoreCase("now")) {
-                        java.util.Date nowDate = new Date();
-                        date = new java.sql.Date(nowDate.getTime());
-                    } else {
-                        try {
-                            DateFormat format = new SimpleDateFormat("d.M.Y-H:m");
-                            java.util.Date inputDate = format.parse(input);
-                            date = new java.sql.Date(inputDate.getTime());
-                        } catch (ParseException ex) {
-                            System.out.println("Invalid input");
-                        }
+            String input;
+
+            while (date == null) {
+                System.out.println("Date in format(DD.MM.YYYY-HH:MM) or (now)");
+                input = scanner.nextLine();
+                if (input.equalsIgnoreCase("now")) {
+                    java.util.Date nowDate = new Date();
+                    date = new java.sql.Date(nowDate.getTime());
+                } else {
+                    try {
+                        DateFormat format = new SimpleDateFormat("d.M.Y-H:m");
+                        java.util.Date inputDate = format.parse(input);
+                        date = new java.sql.Date(inputDate.getTime());
+                    } catch (ParseException ex) {
+                        System.out.println("Invalid input");
                     }
                 }
+            }
 
-                while (performance == null) {
-                    
+            while (performance == null) {
+                System.out.println("Input performance (0-10): ");
+                input = scanner.nextLine();
+                try {
+                    performance = Integer.parseInt(input);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input: " + input);
+                }
+            }
+
+
+            while (notes == null) {
+                System.out.println("Input notes (Text): ");
+                notes = scanner.nextLine();
+            }
+
+            while (spectators == null) {
+                System.out.println("Input spectators (Integer): ");
+                input = scanner.nextLine();
+                try {
+                    spectators = Integer.parseInt(input);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid input: " + input);
+                }
+            }
+
+            System.out.println("Indoor or outdoor?");
+            input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("indoor")) {
+                String airQuality = null;
+
+                while (airQuality == null) {
+                    System.out.println("Input air quality (Text): ");
+                    airQuality = scanner.nextLine();
                 }
 
+                // CALL WORKOUT HERE
                 return;
             } else if(input.equalsIgnoreCase("outdoor")) {
 
+                String weather = null;
+                Float temp = null;
 
+                while (weather == null) {
+                    System.out.println("Input weather (Text): ");
+                    weather = scanner.nextLine();
+                }
+
+                while (temp == null) {
+                    System.out.println("Input temperature (Decimal number): ");
+                    input = scanner.nextLine();
+                    try {
+                        temp = Float.parseFloat(input);
+                    } catch (NumberFormatException ex) {
+                        System.out.println("Invalid input: " + input);
+                    }
+
+                }
+
+                // CALL WORKOUT HERE
                 return;
             } else {
                 System.out.println("Invalid input: " + input);
