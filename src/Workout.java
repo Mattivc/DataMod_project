@@ -25,7 +25,7 @@ public class Workout {
 
     }
 
-    public static boolean createIndoor(Connection connection, ArrayList activities, java.sql.Date date, int shape, int performance, String notes, int specktators, Integer template, String airQuality) {
+    public static boolean createIndoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int specktators, Integer template, String airQuality) {
 
         int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, specktators, template);
 
@@ -67,9 +67,15 @@ public class Workout {
 
             // Connect activity to workout
             for (Integer item : activities) {
-                PreparedStatement activityPost = connection.prepareStatement("INSERT INTO TRENINGSØKTØVELSE (TreningsØktID, ØvelseID) VALUES (?, ?)");
-                activityPost.setInt(1, ØktID);
-                activityPost.setInt(2, item);
+                try {
+                    PreparedStatement activityPost = connection.prepareStatement("INSERT INTO TRENINGSØKTØVELSE (TreningsØktID, ØvelseID) VALUES (?, ?)");
+                    activityPost.setInt(1, ØktID);
+                    activityPost.setInt(2, item);
+                    activityPost.executeUpdate();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+
             }
 
             return ØktID;
@@ -97,6 +103,8 @@ public class Workout {
             java.util.Date utilDate = new java.util.Date();
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
             ArrayList<Integer> activities = new ArrayList<Integer>();
+            activities.add(3);
+            activities.add(6);
             Workout.createOutdoor(con, activities, sqlDate, 4, 4, "Notes", 0, null, "Pretty good", (float)22.1);
             Workout.createIndoor(con, activities, sqlDate, 2, 6, "Notes", 0, null, "Good");
 
@@ -107,9 +115,6 @@ public class Workout {
         }
 
     }
-
-
-
 
 
 }
