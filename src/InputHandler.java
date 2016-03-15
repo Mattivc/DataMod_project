@@ -2,7 +2,7 @@ import java.sql.Connection;
 
 public class InputHandler {
 
-    Connection con; //temprorary
+    Connection con;
 
     public InputHandler(Connection con) {
         this.SetState(InputHandlerState.MAIN);
@@ -102,10 +102,14 @@ public class InputHandler {
                         if (NumArgs(input, 3)){
                             ReachGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]), input[3].equalsIgnoreCase("yes"));
                         } break;
+                    case "list":
+                        if (NumArgs(input, 1)){
+                            ListGoals();
+                        } break;
                     case "delete":
                         if (NumArgs(input, 2)){
                             DeleteGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
-                        }
+                        } break;
                     case "back":
                         if (NumArgs(input, 1)) {
                             SetState(InputHandlerState.MAIN);
@@ -159,6 +163,9 @@ public class InputHandler {
         }
     }
 
+    public void ListGoals() {
+        Goal.getAll(this.con);
+    }
 
     public void DeleteGoal(int activityID, int exerciseID){
         //Goal.delete(activityID, exerciseID);
@@ -229,6 +236,7 @@ public class InputHandler {
                     "Goal Commands: \n" +
                     "Create [ActivityID] [ExerciseID]- Create a new goal for the given activity in exercise\n" +
                     "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
+                    "List - List all goals\n" +
                     "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
