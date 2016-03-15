@@ -17,7 +17,7 @@ public class Goal {
     Boolean completed;
 
 
-    public Goal(int activityID, int exerciseID, Date date, Boolean completed) {
+    public Goal(int activityID, int exerciseID, Boolean completed) {
         this.activityID = activityID;
         this.exerciseID = exerciseID;
         this.date = date;
@@ -30,7 +30,7 @@ public class Goal {
     }
 
 
-    public static Boolean create(Connection con, int activityID, int exerciseID) {
+    public static Goal create(Connection con, int activityID, int exerciseID) {
 
 
         try {
@@ -44,10 +44,10 @@ public class Goal {
         }
         catch (java.sql.SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
 
-        return true;
+        return new Goal(activityID, exerciseID, false);
 
     }
 
