@@ -17,7 +17,16 @@ public class Goal {
     Boolean completed;
 
 
-    public Goal(int activityID, int exerciseID, Boolean completed) {
+
+    public Goal(int activityID, int exerciseID) {
+        this.activityID = activityID;
+        this.exerciseID = exerciseID;
+        this.date = null;
+        this.completed = false;
+    }
+
+    public Goal(int activityID, int exerciseID, Date date, Boolean completed) {
+
         this.activityID = activityID;
         this.exerciseID = exerciseID;
         this.date = date;
@@ -35,7 +44,7 @@ public class Goal {
 
         try {
 
-            PreparedStatement st = con.prepareStatement("INSERT INTO MÅL VALUES (?,?,?)");
+            PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
             st.setInt(1, activityID);
             st.setInt(2, exerciseID);
             st.setBoolean(3, false);
@@ -47,7 +56,9 @@ public class Goal {
             return null;
         }
 
-        return new Goal(activityID, exerciseID, false);
+
+        return new Goal(activityID, exerciseID);
+
 
     }
 
@@ -59,7 +70,7 @@ public class Goal {
             ResultSet rs = st.executeQuery("SELECT * FROM MÅL");
             ArrayList<Goal> list = new ArrayList<>();
             while (rs.next()){
-                list.add(new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"),
+                list.add(new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"), rs.getDate("Dato"),
                         rs.getBoolean("Oppnådd")));
             }
             return list;
@@ -76,7 +87,7 @@ public class Goal {
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+exerciseID+"");
             if (rs.next()) {
-                return new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"),  rs.getBoolean("Oppnådd"));
+                return new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"),rs.getDate("Dato"),  rs.getBoolean("Oppnådd"));
             }
             else {
                 return null;
@@ -119,7 +130,7 @@ public class Goal {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            Goal.create(con, 1, 1);
+            Goal goal = Goal.create(con, 1,1);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
