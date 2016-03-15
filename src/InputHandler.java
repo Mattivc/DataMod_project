@@ -78,10 +78,14 @@ public class InputHandler {
                         if (NumArgs(input, 2)) {
 
                         } break;
-                    case "listtemplate":
+                    case "listtemplates":
                         if (NumArgs(input, 1)) {
 
                         } break;
+                    case "listactivities":
+                        if (NumArgs(input, 1)) {
+                            ListTemplateActivities(input[1]);
+                        }
                     case "deletetemplate":
                         if (NumArgs(input, 2)) {
 
@@ -132,6 +136,33 @@ public class InputHandler {
 
                 }
                 break;
+            case ACTIVITYGROUP:
+                switch (cmd) {
+                    case "create": {
+                        if (NumArgs(input, 2)){
+                            CreateActivityGroup(input[1], null);
+                        } else if (NumArgs(input, 3)){
+                            CreateActivityGroup(input[1],input[2]);
+                        }
+                    } break;
+                    case "list ": {
+                        if (NumArgs(input, 1)) {
+                            ListGroupActivities(input[1]);
+                        }
+                    } break;
+                    case "delete": {
+                        if (NumArgs(input, 1)){
+                            DeleteActivityGroup(input[1]);
+                        }
+                    } break;
+                    case "back": {
+                    }
+                    default: {
+                        System.out.println("Invalid command: " + cmd);
+                    } break;
+                }
+                break;
+
         }
 
         return false;
@@ -162,8 +193,19 @@ public class InputHandler {
         Activity.removeWhereNameLike(this.con, name);
     }
 
+    // ---- ActivityGroup ---
 
+    public void CreateActivityGroup(String name, String belongsToGroup){
+        ActivityGroup.create(this.con, name, Integer.parseInt(belongsToGroup));
+    }
 
+    public void ListGroupActivities(String name){
+        ActivityGroup.getAll(this.con, name);
+    }
+
+    public void DeleteActivityGroup(String name){
+        ActivityGroup.removeWhereNameLike(this.con, name);
+    }
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
@@ -189,13 +231,17 @@ public class InputHandler {
     // ---- WORKOUT ----
 
     public void ListTemplate() {
-
+        //TODO
 
     }
 
+    public void ListTemplateActivities(String workoutID){
+        Workout.getActivitiesFromWorkout(this.con, Integer.parseInt(workoutID));
+    }
 
-    public void DeleteTemplate(String name) {
 
+    public void DeleteTemplate(String workoutID) {
+        Workout.deleteWorkoutTemplate(this.con, Integer.parseInt(workoutID));
     }
 
     public ArrayList<Integer> GetActivitiesFromUser() {
@@ -363,6 +409,7 @@ public class InputHandler {
                     "-----------------------------------------------\n" +
                     "Main Commands: \n" +
                     "Activity  - Enter Activity menu\n" +
+                    "ActivityGroup - Enter ActivityGroup menu\n" +
                     "Goal - Enter Goal menu\n" +
                     "Workout - Enter Workout menu\n" +
                     "Quit - Exit program\n" +
@@ -385,7 +432,7 @@ public class InputHandler {
                     "-----------------------------------------------\n" +
                     "Workout Commands: \n" +
                     "StartWorkout [Template(Optional)] - Start new workout\n" +
-                    "ListTemplate - List all workouts\n" +
+                    "ListTemplates - List all workouts\n" +
                     "ListActivities [Name] - List all activities in a template\n" +
                     "DeleteTemplate [Name] - Delete a existing workout template\n" +
                     "Back - Return to main menu\n" +
@@ -400,6 +447,17 @@ public class InputHandler {
                     "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
                     "List - List all goals\n" +
                     "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
+                    "Back - Return to main menu\n" +
+                    "-----------------------------------------------\n"
+                );
+                break;
+            case ACTIVITYGROUP:
+                System.out.print(
+                    "-----------------------------------------------\n" +
+                    "ActivityGroup Commands: \n" +
+                    "Create [Name] (Group)- Create a new group, optionally belonging to another group\n" +
+                    "List [name] - List existing ActivityGroups\n" +
+                    "Delete [Name] - Delete an existing ActivityGroup\n" +
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
                 );

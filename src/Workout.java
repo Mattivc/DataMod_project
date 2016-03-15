@@ -119,6 +119,16 @@ public class Workout {
 
     }
 
+    public static ArrayList<Workout> getAll(Connection con){
+        ArrayList<Workout> list = new ArrayList<>();
+        //TODO
+        return list;
+    }
+
+    public static void deleteWorkoutTemplate(Connection con, int workoutID){
+        //TODO
+    }
+
 
 
     public static void main(String[] args){

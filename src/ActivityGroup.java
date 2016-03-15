@@ -37,6 +37,12 @@ public class ActivityGroup {
         return true;
     }
 
+    public static ArrayList<Activity> getAll(Connection con, String name){
+        ArrayList<Activity> list = new ArrayList<>();
+        //TODO
+        return list;
+    }
+
 
 
     public static void main(String[] args){
