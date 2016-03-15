@@ -17,6 +17,13 @@ public class Goal {
     Boolean completed;
 
 
+    public Goal(int activityID, int exerciseID) {
+        this.activityID = activityID;
+        this.exerciseID = exerciseID;
+        this.date = null;
+        this.completed = false;
+    }
+
     public Goal(int activityID, int exerciseID, Date date, Boolean completed) {
         this.activityID = activityID;
         this.exerciseID = exerciseID;
@@ -30,24 +37,23 @@ public class Goal {
     }
 
 
-    public static Boolean create(Connection con, int activityID, int exerciseID) {
+    public static Goal create(Connection con, int activityID, int exerciseID) {
 
         try {
 
-            PreparedStatement st = con.prepareStatement("INSERT INTO MÅL VALUES (?,?,?,?)");
+            PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
             st.setInt(1, activityID);
             st.setInt(2, exerciseID);
-            st.setDate(3, null);
-            st.setBoolean(4, false);
+            st.setBoolean(3, false);
             st.execute();
 
         }
         catch (java.sql.SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return null;
         }
 
-        return true;
+        return new Goal(activityID, exerciseID);
 
     }
 
@@ -119,7 +125,7 @@ public class Goal {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            Goal.create(con, 1, 1);
+            Goal goal = Goal.create(con, 1,1);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
