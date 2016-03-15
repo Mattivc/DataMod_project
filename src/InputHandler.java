@@ -168,7 +168,7 @@ public class InputHandler {
     }
 
     public void DeleteGoal(int activityID, int exerciseID){
-        //Goal.delete(activityID, exerciseID);
+        Goal.delete(this.con, activityID, exerciseID);
     }
 
 
