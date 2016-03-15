@@ -125,8 +125,17 @@ public class Workout {
         return list;
     }
 
-    public static void deleteWorkoutTemplate(Connection con, int workoutID){
-        //TODO
+    public static boolean deleteWorkoutTemplate(Connection con, int workoutID){
+        try {
+            PreparedStatement post = con.prepareStatement("DELETE FROM TRENINGSØKT WHERE TreningsØktID LIKE ?");
+            post.setInt(1, workoutID);
+            post.execute();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
 
