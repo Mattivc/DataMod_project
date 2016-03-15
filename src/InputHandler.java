@@ -154,7 +154,7 @@ public class InputHandler {
     }
 
     public void ListActivity() {
-
+        Activity.getAll(this.con);
     }
 
 
@@ -223,7 +223,7 @@ public class InputHandler {
                     "-----------------------------------------------\n" +
                     "Activity Commands: \n" +
                     "Create [Name] [Description] (Replacement) (Group)- Create a new activity\n" +
-                    "List - List all goals\n" +
+                    "List - List all activities\n" +
                     "Delete [Name] - Delete a existing activity\n" +
                     "Back - Return to main menu\n" +
                     "-----------------------------------------------\n"
