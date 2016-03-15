@@ -229,8 +229,7 @@ public class InputHandler {
     // ---- WORKOUT ----
 
     public void ListTemplate() {
-        //TODO
-
+        Workout.getAll(this.con);
     }
 
     public void ListTemplateActivities(String workoutID){
