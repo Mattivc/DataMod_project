@@ -148,14 +148,15 @@ public class InputHandler {
         Activity.add(this.con, name, description, Integer.parseInt(replacement), Integer.parseInt(group));
     }
 
-    public void DeleteActivity(String name) {
-
-
-    }
-
     public void ListActivity() {
         Activity.getAll(this.con);
     }
+
+    public void DeleteActivity(String name) {
+        Activity.removeWhereNameLike(this.con, name);
+    }
+
+
 
 
     // ------ GOAL ------
@@ -177,10 +178,7 @@ public class InputHandler {
     public void DeleteGoal(int activityID, int exerciseID){
         Goal.delete(this.con, activityID, exerciseID);
     }
-
-
-
-
+    
 
     // ---- WORKOUT ----
     public void CreateTemplate(String name) {
