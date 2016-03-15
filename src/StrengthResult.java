@@ -7,7 +7,7 @@ public class StrengthResult extends Result {
     int sets, reps;
 
     public StrengthResult(int activityID, int exerciseID, double weight, int sets, int reps) {
-        super(activityID, exerciseID);
+        //super(activityID, exerciseID);
         this.weight = weight;
         this.sets = sets;
         this.reps = reps;
