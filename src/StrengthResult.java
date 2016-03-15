@@ -3,11 +3,11 @@
  */
 public class StrengthResult extends Result {
 
-    double weight;
+    float weight;
     int sets, reps;
 
-    public StrengthResult(int activityID, int exerciseID, double weight, int sets, int reps) {
-        //super(activityID, exerciseID);
+    public StrengthResult(int activityID, int exerciseID, float weight, int sets, int reps) {
+        super(activityID, exerciseID);
         this.weight = weight;
         this.sets = sets;
         this.reps = reps;

@@ -1,16 +1,11 @@
-import java.sql.Time;
 
-/**
- * Created by jorgen on 15/03/16.
- */
 public class CardioResult extends Result {
 
-    float lenght;
-    Time time;
+    float lenght, duration;
 
-    public CardioResult(int activityID, int exerciseID, float length, Time time) {
-        //super(activityID, exerciseID);
+    public CardioResult(int activityID, int exerciseID, float length, float duration) {
+        super(activityID, exerciseID);
         this.lenght = length;
-        this.time = time;
+        this.duration = duration;
     }
 }
