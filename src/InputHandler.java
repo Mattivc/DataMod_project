@@ -1,5 +1,8 @@
 import java.sql.Connection;
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -201,13 +204,32 @@ public class InputHandler {
 
             if (input.equalsIgnoreCase("indoor")) {
 
-                Date date;
-                int performance;
-                String notes;
-                int spectators;
-                String airQuality;
+                java.sql.Date date = null;
+                Integer performance = null;
+                String notes = null;
+                Integer spectators = null;
+                String airQuality = null;
 
+                while (date == null) {
+                    System.out.println("Date in format(DD.MM.YYYY-HH:MM) or (now)");
+                    input = scanner.nextLine();
+                    if (input.equalsIgnoreCase("now")) {
+                        java.util.Date nowDate = new Date();
+                        date = new java.sql.Date(nowDate.getTime());
+                    } else {
+                        try {
+                            DateFormat format = new SimpleDateFormat("d.M.Y-H:m");
+                            java.util.Date inputDate = format.parse(input);
+                            date = new java.sql.Date(inputDate.getTime());
+                        } catch (ParseException ex) {
+                            System.out.println("Invalid input");
+                        }
+                    }
+                }
 
+                while (performance == null) {
+                    
+                }
 
                 return;
             } else if(input.equalsIgnoreCase("outdoor")) {
@@ -218,10 +240,6 @@ public class InputHandler {
                 System.out.println("Invalid input: " + input);
             }
         }
-
-
-
-        System.out.println(scanner.nextInt());
     }
 
     public void StartWorkout(String template) {}
