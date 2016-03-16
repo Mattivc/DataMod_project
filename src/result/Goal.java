@@ -35,14 +35,15 @@ public class Goal {
     }
 
 
-    public static Goal create(Connection con, int activityID, int exerciseID) {
+    private static Goal create(Connection con, int activityID, int workoutID) {
 
+        Result.addResult(con, activityID, workoutID);
 
         try {
 
             PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
             st.setInt(1, activityID);
-            st.setInt(2, exerciseID);
+            st.setInt(2, workoutID);
             st.setBoolean(3, false);
             st.execute();
 
@@ -53,15 +54,34 @@ public class Goal {
         }
 
 
-        return new Goal(activityID, exerciseID);
+        return new Goal(activityID, workoutID);
 
 
     }
 
-    public static Boolean delete(Connection con, int activityID, int exerciseID) {
+    public static boolean createStrengthResult(Connection connection, int activityID, int workoutID, float weight, int sets, int reps) {
+
 
         try {
-            con.createStatement().execute("DELETE FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+exerciseID+"");
+            PreparedStatement post = connection.prepareStatement("INSERT INTO STYRKE (ØvelseID, TreningsØktID, Belastning, Antall_sett, Antall_reps) VALUES (?, ?, ?, ?, ?)");
+            post.setInt(1, activityID);
+            post.setInt(2, workoutID);
+            post.setFloat(3, weight);
+            post.setInt(4, sets);
+            post.setInt(5, reps);
+            post.execute();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static Boolean delete(Connection con, int activityID, int worokoutID) {
+
+        try {
+            con.createStatement().execute("DELETE FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+worokoutID+"");
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -89,10 +109,10 @@ public class Goal {
         }
     }
 
-    public static Goal get(Connection con, int activityID, int exerciseID) {
+    public static Goal get(Connection con, int activityID, int workoutID) {
         try {
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+exerciseID+"");
+            ResultSet rs = st.executeQuery("SELECT * FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+workoutID+"");
             if (rs.next()) {
                 return new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"),rs.getDate("Dato"),  rs.getBoolean("Oppnådd"));
             }
@@ -106,11 +126,11 @@ public class Goal {
         }
     }
 
-    public static Boolean setAsCompleted(Connection con, int activityID, int exerciseID) {
+    public static Boolean setAsCompleted(Connection con, int activityID, int workoutID) {
         try {
             Date date = new Date();
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            PreparedStatement st = con.prepareStatement("UPDATE MÅL SET Oppnådd=?, Dato=? WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+exerciseID+"");
+            PreparedStatement st = con.prepareStatement("UPDATE MÅL SET Oppnådd=?, Dato=? WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+workoutID+"");
             st.setBoolean(1, true);
             st.setDate(2, sqlDate);
             st.execute();
