@@ -57,15 +57,15 @@ CREATE TABLE RESULTAT   (
 
 
 CREATE TABLE STYRKEMÅL (
-    MålID            INT            NOT NULL AUTO_INCREMENT,
-    ØvelseID            INT    NOT NULL,
-    Belastning          FLOAT,
-    Antall_sett         INT,
-    Antall_reps         INT,
-    Dato            DATE,
+    MålID            INT       NOT NULL AUTO_INCREMENT,
+    ØvelseID         INT    NOT NULL,
+    Belastning       FLOAT,
+    Antall_sett      INT,
+    Antall_reps      INT,
+    Dato             DATE,
     Oppnådd	BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY (MålID),
-    FOREIGN KEY(ØvelseID)         REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(ØvelseID)         REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE KONDISJONMÅL (
@@ -76,7 +76,7 @@ CREATE TABLE KONDISJONMÅL (
     Dato            DATE,
     Oppnådd	BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY (MålID),
-    FOREIGN KEY(ØvelseID)         REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY(ØvelseID)         REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE STYRKE (
