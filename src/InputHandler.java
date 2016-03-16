@@ -39,6 +39,9 @@ public class InputHandler {
                     case "workout": {
                         SetState(InputHandlerState.WORKOUT);
                     } break;
+                    case "activitygroup": {
+                        SetState(InputHandlerState.ACTIVITYGROUP);
+                    } break;
                     case "quit": {
                         System.out.println("Goodbye.");
                         return true;
@@ -146,7 +149,7 @@ public class InputHandler {
                         if (NumArgs(input, 2)){
                             CreateActivityGroup(input[1], null);
                         } else if (NumArgs(input, 3)){
-                            CreateActivityGroup(input[1],input[2]);
+                            CreateActivityGroup(input[1],Integer.parseInt(input[2]));
                         }
                     } break;
                     case "list ": {
@@ -160,6 +163,7 @@ public class InputHandler {
                         }
                     } break;
                     case "back": {
+                        SetState(InputHandlerState.MAIN);
                     }
                     default: {
                         System.out.println("Invalid command: " + cmd);
@@ -190,7 +194,16 @@ public class InputHandler {
     }
 
     public void ListActivity() {
-        //Activity.getAll(this.con);
+
+        ArrayList<Activity> dbActivities = Activity.getAll(con);
+
+        for (Activity activity: dbActivities) {
+            String ID = Integer.toString(activity.ID);
+
+            System.out.println("Name: " + activity.name);
+            System.out.println("    ID: " + ID);
+            System.out.println("    Description: " + activity.description);
+        }
     }
 
     public void DeleteActivity(String name) {
@@ -199,8 +212,8 @@ public class InputHandler {
 
     // ---- ActivityGroup ---
 
-    public void CreateActivityGroup(String name, String belongsToGroup){
-        ActivityGroup.create(this.con, name, Integer.parseInt(belongsToGroup));
+    public void CreateActivityGroup(String name, Integer belongsToGroup){
+        ActivityGroup.create(this.con, name, belongsToGroup);
     }
 
     public void ListGroupActivities(String name){

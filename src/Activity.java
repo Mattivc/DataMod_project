@@ -67,7 +67,7 @@ public class Activity {
 
                 int ID = Integer.parseInt(rs.getString("ØvelseID"));
                 String name = rs.getString("Navn");
-                String description = rs.getString("Erstatning");
+                String description = rs.getString("Beskrivelse");
                 Integer replacement = rs.getInt("Erstatning");
                 Integer groupID = rs.getInt("GruppeID");
 
@@ -96,7 +96,8 @@ public class Activity {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            Activity.getAll(con);
+            Activity.add(con, "Benk", "Press", null, null);
+            //Activity.getAll(con);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
