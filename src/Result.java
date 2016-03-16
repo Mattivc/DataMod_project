@@ -51,7 +51,7 @@ public class Result {
 
     }
 
-    private static void addResult(Connection connection, int activityID, int workoutID) {
+    public static void addResult(Connection connection, int activityID, int workoutID) {
         try {
             PreparedStatement post = connection.prepareStatement("INSERT INTO RESULTAT (ØvelseID, TreningsØktID) VALUES (?, ?)");
             post.setInt(1, activityID);
