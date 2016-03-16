@@ -7,11 +7,9 @@ import java.util.Date;
 
 public class Goal {
 
-
     int activityID, exerciseID;
     Date date;
     Boolean completed;
-
 
 
     public Goal(int activityID, int exerciseID) {
@@ -21,6 +19,7 @@ public class Goal {
         this.completed = false;
     }
 
+
     public Goal(int activityID, int exerciseID, Date date, Boolean completed) {
 
         this.activityID = activityID;
@@ -29,16 +28,14 @@ public class Goal {
         this.completed = completed;
     }
 
+
     @Override
     public String toString() {
         return this.activityID + " " + this.exerciseID + " " + this.date + " " + this.completed;
     }
 
 
-    private static Goal create(Connection con, int activityID, int workoutID) {
-
-        Result.addResult(con, activityID, workoutID);
-
+    private static boolean create(Connection con, int activityID, int workoutID) {
         try {
 
             PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
@@ -50,36 +47,23 @@ public class Goal {
         }
         catch (java.sql.SQLException ex) {
             ex.printStackTrace();
-            return null;
-        }
-
-
-        return new Goal(activityID, workoutID);
-
-
-    }
-
-    public static boolean createStrengthResult(Connection connection, int activityID, int workoutID, float weight, int sets, int reps) {
-
-
-        try {
-            PreparedStatement post = connection.prepareStatement("INSERT INTO STYRKE (ØvelseID, TreningsØktID, Belastning, Antall_sett, Antall_reps) VALUES (?, ?, ?, ?, ?)");
-            post.setInt(1, activityID);
-            post.setInt(2, workoutID);
-            post.setFloat(3, weight);
-            post.setInt(4, sets);
-            post.setInt(5, reps);
-            post.execute();
-            return true;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
             return false;
         }
-
+        return true;
     }
 
-    public static Boolean delete(Connection con, int activityID, int worokoutID) {
 
+    public static boolean createStrengthGoal(Connection con, int activityID, int workoutID, float weight, int sets, int reps) {
+        return Goal.create(con, activityID, workoutID) && Result.addStrengthResult(con, activityID, workoutID, weight, sets, reps);
+    }
+
+
+    public static boolean createCardioGoal(Connection con, int activityID, int workoutID, float length, float duration) {
+        return Goal.create(con, activityID, workoutID) && Result.addCardioResult(con, activityID, workoutID, length, duration);
+    }
+
+
+    public static Boolean delete(Connection con, int activityID, int worokoutID) {
         try {
             con.createStatement().execute("DELETE FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+worokoutID+"");
             return true;
@@ -88,6 +72,7 @@ public class Goal {
             return false;
         }
     }
+
 
     public static ArrayList<Goal> getAll(Connection con) {
 
@@ -109,6 +94,7 @@ public class Goal {
         }
     }
 
+
     public static Goal get(Connection con, int activityID, int workoutID) {
         try {
             Statement st = con.createStatement();
@@ -126,6 +112,7 @@ public class Goal {
         }
     }
 
+
     public static Boolean setAsCompleted(Connection con, int activityID, int workoutID) {
         try {
             Date date = new Date();
@@ -142,10 +129,10 @@ public class Goal {
         }
     }
 
+
     public static Boolean setAsCompleted(Connection con, Goal goal) {
         return setAsCompleted(con, goal.activityID, goal.exerciseID);
     }
-
 
 
     public static void main(String[] args){
@@ -178,13 +165,6 @@ public class Goal {
                 ex.printStackTrace();
             }
         }
-
-
-
-
-
-
-
     }
 
 
