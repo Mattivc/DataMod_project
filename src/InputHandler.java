@@ -115,8 +115,8 @@ public class InputHandler {
                             CreateGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
                         } break;
                     case "reach":
-                        if (NumArgs(input, 3)){
-                            ReachGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]), input[3].equalsIgnoreCase("yes"));
+                        if (NumArgs(input, 2)){
+                            ReachGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
                         } break;
                     case "list":
                         if (NumArgs(input, 1)){
@@ -213,10 +213,8 @@ public class InputHandler {
 
     }
 
-    public void ReachGoal(int activityID, int exerciseID, boolean reached){
-        if (reached) {
-            Goal.setAsCompleted(this.con, activityID, exerciseID);
-        }
+    public void ReachGoal(int activityID, int exerciseID){
+        Goal.setAsCompleted(this.con, activityID, exerciseID);
     }
 
     public void ListGoals() {
