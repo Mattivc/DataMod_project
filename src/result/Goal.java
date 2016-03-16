@@ -146,7 +146,7 @@ public abstract class Goal {
                 Date date = rs.getDate("Dato");
                 boolean completed = rs.getBoolean("Oppnådd");
 
-                strengthGoals.add(new StrengthGoal(goalID, actID, ));
+                strengthGoals.add(new StrengthGoal(goalID, actID, weight, set, reps));
 
             }
 
@@ -184,67 +184,6 @@ public abstract class Goal {
     }
 
 
-    /*public static ArrayList<Goal> getAll(Connection con) {
-
-        try {
-
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM MÅL");
-            ArrayList<Goal> list = new ArrayList<>();
-            while (rs.next()){
-                list.add(new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"), rs.getDate("Dato"),
-                        rs.getBoolean("Oppnådd")));
-            }
-            return list;
-
-        }
-        catch (java.sql.SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-
-    public static Goal get(Connection con, int activityID, int workoutID) {
-        try {
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+workoutID+"");
-            if (rs.next()) {
-                return new Goal(rs.getInt("ØvelseID"), rs.getInt("TreningsØktID"),rs.getDate("Dato"),  rs.getBoolean("Oppnådd"));
-            }
-            else {
-                return null;
-            }
-        }
-        catch (java.sql.SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-
-    public static Boolean setAsCompleted(Connection con, int activityID, int workoutID) {
-        try {
-            Date date = new Date();
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            PreparedStatement st = con.prepareStatement("UPDATE MÅL SET Oppnådd=?, Dato=? WHERE ØvelseID LIKE "+activityID+" AND TreningsØktID LIKE "+workoutID+"");
-            st.setBoolean(1, true);
-            st.setDate(2, sqlDate);
-            st.execute();
-            return true;
-        }
-        catch (java.sql.SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
-
-
-    public static Boolean setAsCompleted(Connection con, Goal goal) {
-        return setAsCompleted(con, goal.activityID, goal.exerciseID);
-    }
-
-*/
     public static void main(String[] args){
         Connection con = null;
         Statement st = null;
