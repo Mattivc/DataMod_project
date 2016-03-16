@@ -1,4 +1,6 @@
+import result.CardioGoal;
 import result.Goal;
+import result.StrengthGoal;
 
 import java.sql.Connection;
 import java.text.DateFormat;
@@ -111,20 +113,29 @@ public class InputHandler {
             case GOAL:
                 switch (cmd){
                     case "create":
-                        if (NumArgs(input, 3)){
-                            CreateGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
-                        } break;
+
+                        if (NumArgs(input, 5)) {
+                            CreateStrengthGoal(input[1], input[2], input[3], input[4]);
+                        }
+                        else if (NumArgs(input, 4) ){
+                            CreateCardioGoal(input[1], input[2], input[3]);
+                        }
+                        System.out.print("Wrong number of arguments");
+                        break;
                     case "reach":
-                        if (NumArgs(input, 2)){
-                            ReachGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
-                        } break;
+                        if (NumArgs(input, 3)){
+
+                            ReachGoal(input [1], input[2]);
+                        }
+                        System.out.println("Wrong number of arguments");
+                        break;
                     case "list":
-                        if (NumArgs(input, 1)){
-                            ListGoals();
+                        if (NumArgs(input, 2)){
+                            ListGoals(input[1]);
                         } break;
                     case "delete":
-                        if (NumArgs(input, 2)){
-                            DeleteGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
+                        if (NumArgs(input, 3)){
+                            DeleteGoal(input[1], input[2]);
                         } break;
                     case "back":
                         if (NumArgs(input, 1)) {
@@ -172,7 +183,7 @@ public class InputHandler {
         if (input.length == n) {
             return true;
         } else {
-            System.out.println("Wrong number of arguments");
+            //System.out.println("Wrong number of arguments");
             SetState(this.state);
             return false;
         }
@@ -186,7 +197,7 @@ public class InputHandler {
     }
 
     public void ListActivity() {
-        //Activity.getAll(this.con);
+        Activity.getAll(this.con);
     }
 
     public void DeleteActivity(String name) {
@@ -208,22 +219,98 @@ public class InputHandler {
     }
 
     // ------ GOAL ------
-    public void CreateGoal(int activityID, int exerciseID){
-        //Goal.create(con, activityID, exerciseID);
+    public void CreateGoal(String activityID, String type){
 
     }
 
-    public void ReachGoal(int activityID, int exerciseID){
+    public void CreateStrengthGoal(String activitID, String weight, String set, String reps) {
+        try {
+            int actID = Integer.parseInt(activitID);
+            float w = Float.parseFloat(weight);
+            int s = Integer.parseInt(set);
+            int r = Integer.parseInt(reps);
+            Goal.createStrengthGoal(con, actID, w, s, r);
+        }
+        catch (NumberFormatException ex) {
+            System.out.print("Goal creation not successfull, error in input.");
+        }
+    }
+
+    public void CreateCardioGoal(String activityID, String length, String duration) {
+        try {
+            int actID = Integer.parseInt(activityID);
+            float l = Float.parseFloat(length);
+            float d = Float.parseFloat(duration);
+            Goal.createCardioGoal(con, actID, l, d);
+        }
+        catch (NumberFormatException ex) {
+            System.out.print("Goal creation not successfull, error in input.");
+        }
+    }
+
+    public void ReachGoal(String goalID, String type){
         //Goal.setAsCompleted(this.con, activityID, exerciseID);
+        try {
+            int g = Integer.parseInt(goalID);
+
+            if (type.toLowerCase().equals("cardio")) {
+                Goal.setCardioGoalAsCompleted(con, g);
+            }
+            else if (type.toLowerCase().equals("strength")) {
+                Goal.setStrengthGoalAsCompleted(con, g);
+            }
+        }
+        catch (NumberFormatException ex) {
+            System.out.print("ReachGoal failed, wrong argument.");
+        }
+
+
     }
 
-    public void ListGoals() {
+    public void ListGoals(String type) {
 
+        String t = type.toLowerCase();
+        System.out.println("Goals:");
+
+        if (t.equals("all") || t.equals("cardio")) {
+
+            ArrayList<CardioGoal> goals = Goal.getCardioGoals(con);
+
+            for (CardioGoal goal : goals) {
+                System.out.println("Type: Cardio" + " ID: " + goal.getGoalID() + " ØvelseID: " + goal.getActivityID() + " Lengde: " + goal.getLenght() + " Tid: " + goal.getDuration());
+            }
+
+        }
+        if (t.equals("all") || t.equals("strength")) {
+
+            ArrayList<StrengthGoal> goals = Goal.getStrengthGoals(con);
+
+            for (StrengthGoal goal: goals) {
+                System.out.println("Type: Strength" + " ID: " + goal.getGoalID() + " ØvelseID: " + goal.getActivityID() + " Weight: " + goal.getWeight() + " Set: " + goal.getSets() + " Reps: " + goal.getReps());
+            }
+        }
 
     }
 
-    public void DeleteGoal(int activityID, int exerciseID){
-        //Goal.delete(this.con, activityID, exerciseID);
+    public void DeleteGoal(String goalID, String type){
+
+        try {
+            int g = Integer.parseInt(goalID);
+
+            if (type.toLowerCase().equals("cardio")) {
+                Goal.deletCardioGoal(con, g);
+            }
+            else if (type.toLowerCase().equals("strength")) {
+                Goal.deleteStrengthGoal(con, g);
+            }
+            else {
+                System.out.println(type + " is not a valid type. Use cardio/strength");
+            }
+        }
+        catch (NumberFormatException ex) {
+            System.out.println();
+        }
+
     }
 
     // ---- RESULT ---
@@ -447,10 +534,11 @@ public class InputHandler {
                 System.out.print(
                     "-----------------------------------------------\n" +
                     "Goal Commands: \n" +
-                    "Create [ActivityID] [ExerciseID]- Create a new goal for the given activity in exercise\n" +
-                    "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
-                    "List - List all goals\n" +
-                    "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
+                    "Create [ActivityID] [Weight] [Set] [Reps] - Create new goal for a strengthexercise\n" +
+                    "Create [ActivityID] [Length(Kilometres)] [Duration(Seconds)] - Create new goal for cardioexercise\n" +
+                    "Reach [GoalID] [Cardio/Strength]- Marks the goal as reached\n" +
+                    "List [Cardio/Strength/All] - List all goals\n" +
+                    "Delete [GoalID] [Cardio/Strength] - Delete an existing goal\n" +
                     "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
                 );

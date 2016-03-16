@@ -28,7 +28,21 @@ public abstract class Goal {
     }
 
 
+    public int getActivityID() {
+        return activityID;
+    }
 
+    public int getGoalID() {
+        return goalID;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
 
     public static boolean createStrengthGoal(Connection con, int activityID, float weight, int sets, int reps) {
 
@@ -87,6 +101,7 @@ public abstract class Goal {
 
     public static boolean setStrengthGoalAsCompleted(Connection con, int goalID) {
         try {
+            System.out.print("HERHERHERERRHEIARHØAERHKAFSALNFk");
             Date date = new Date();
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
             PreparedStatement st = con.prepareStatement("UPDATE STYRKEMÅL SET Oppnådd=?, Dato=? WHERE STYRKEMÅL.MålID LIKE "+goalID+"");

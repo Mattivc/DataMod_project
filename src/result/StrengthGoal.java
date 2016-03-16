@@ -24,4 +24,16 @@ public class StrengthGoal extends Goal {
         this.reps = reps;
     }
 
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public int getSets() {
+        return sets;
+    }
+
+    public int getReps() {
+        return reps;
+    }
 }

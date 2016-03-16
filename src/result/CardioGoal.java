@@ -21,4 +21,12 @@ public class CardioGoal extends Goal {
         this.duration = duration;
     }
 
+
+    public float getLenght() {
+        return lenght;
+    }
+
+    public float getDuration() {
+        return duration;
+    }
 }
