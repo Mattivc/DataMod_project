@@ -218,7 +218,14 @@ public class InputHandler {
     }
 
     public void ListGoals() {
-        Goal.getAll(this.con);
+        ArrayList<Goal> goals = Goal.getAll(con);
+
+
+        for (Goal goal: goals) {
+
+
+        }
+
     }
 
     public void DeleteGoal(int activityID, int exerciseID){

@@ -43,7 +43,6 @@ public class Goal {
 
 
         try {
-
             PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
             st.setInt(1, activityID);
             st.setInt(2, exerciseID);
