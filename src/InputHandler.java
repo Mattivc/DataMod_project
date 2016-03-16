@@ -49,11 +49,10 @@ public class InputHandler {
                         if (NumArgs(input, 3)) {
                             CreateActivity(input[1], input[2], null, null);
                         } else if (NumArgs(input, 4)) {
-                            CreateActivity(input[1], input[2], input[3], null);
+                            CreateActivity(input[1], input[2], Integer.parseInt(input[3]), null);
                         } else if (NumArgs(input, 5)) {
-                            CreateActivity(input[1], input[2], input[3], input[4]);
-                        break;
-                    }
+                            CreateActivity(input[1], input[2], Integer.parseInt(input[3]), Integer.parseInt(input[4]));
+                        } break;
                     case "list":
                         if (NumArgs(input, 1)) {
                             ListActivity();
@@ -111,7 +110,7 @@ public class InputHandler {
             case GOAL:
                 switch (cmd){
                     case "create":
-                        if (NumArgs(input, 2)){
+                        if (NumArgs(input, 3)){
                             CreateGoal(Integer.parseInt(input[1]), Integer.parseInt(input[2]));
                         } break;
                     case "reach":
@@ -181,8 +180,8 @@ public class InputHandler {
 
 
     // ----- ACTIVITY ----
-    public void CreateActivity(String name, String description, String replacement, String group ) {
-        Activity.add(this.con, name, description, Integer.parseInt(replacement), Integer.parseInt(group));
+    public void CreateActivity(String name, String description, Integer replacement, Integer group ) {
+        Activity.add(this.con, name, description, replacement, group);
     }
 
     public void ListActivity() {
