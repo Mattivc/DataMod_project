@@ -107,7 +107,7 @@ public abstract class Goal {
 
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM KONDISJONMÅL");
 
-            ArrayList cardioGoals = new ArrayList();
+            ArrayList<CardioGoal> cardioGoals = new ArrayList();
             while (rs.next()) {
 
                 int goalID = rs.getInt("MålID");
@@ -117,11 +117,11 @@ public abstract class Goal {
                 Date date = rs.getDate("Dato");
                 boolean completed = rs.getBoolean("Oppnådd");
 
-                CardioGoal goal = new CardioGoal(goalID, actID, )
-                cardioResults.add(result);
+                CardioGoal goal = new CardioGoal(goalID, actID, length, duration, date, completed);
+                cardioGoals.add(goal);
             }
 
-            return cardioResults;
+            return cardioGoals;
 
 
         } catch (SQLException ex) {
@@ -129,6 +129,36 @@ public abstract class Goal {
             return null;
         }
     }
+
+    public static ArrayList<StrengthGoal> getStrengthGoals(Connection con) {
+        try {
+
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM STYRKEMÅL");
+
+            ArrayList<StrengthGoal> strengthGoals = new ArrayList();
+            while (rs.next()) {
+
+                int goalID = rs.getInt("MålID");
+                int actID = rs.getInt("ØvelseID");
+                float weight = rs.getFloat("Belastning");
+                int set = rs.getInt("Antall_sett");
+                int reps = rs.getInt("Antall_reps");
+                Date date = rs.getDate("Dato");
+                boolean completed = rs.getBoolean("Oppnådd");
+
+                strengthGoals.add(new StrengthGoal(goalID, actID, ));
+
+            }
+
+            return strengthGoals;
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 

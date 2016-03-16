@@ -214,17 +214,11 @@ public class InputHandler {
     }
 
     public void ReachGoal(int activityID, int exerciseID){
-        Goal.setAsCompleted(this.con, activityID, exerciseID);
+        //Goal.setAsCompleted(this.con, activityID, exerciseID);
     }
 
     public void ListGoals() {
-        ArrayList<Goal> goals = Goal.getAll(con);
 
-
-        for (Goal goal: goals) {
-
-
-        }
 
     }
 
