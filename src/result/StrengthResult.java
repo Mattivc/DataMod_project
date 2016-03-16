@@ -5,8 +5,8 @@ package result;
  */
 public class StrengthResult extends Result {
 
-    float weight;
-    int sets, reps;
+    public float weight;
+    public int sets, reps;
 
     public StrengthResult(int activityID, int workoutID, float weight, int sets, int reps) {
         super(activityID, workoutID);

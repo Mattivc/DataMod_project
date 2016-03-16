@@ -1,6 +1,11 @@
+import java.util.ArrayList;
+
 import result.CardioGoal;
 import result.Goal;
 import result.StrengthGoal;
+import result.CardioResult;
+import result.Result;
+import result.StrengthResult;
 
 import java.sql.Connection;
 import java.text.DateFormat;
@@ -8,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -36,6 +42,9 @@ public class InputHandler {
                     } break;
                     case "workout": {
                         SetState(InputHandlerState.WORKOUT);
+                    } break;
+                    case "activitygroup": {
+                        SetState(InputHandlerState.ACTIVITYGROUP);
                     } break;
                     case "quit": {
                         System.out.println("Goodbye.");
@@ -153,7 +162,7 @@ public class InputHandler {
                         if (NumArgs(input, 2)){
                             CreateActivityGroup(input[1], null);
                         } else if (NumArgs(input, 3)){
-                            CreateActivityGroup(input[1],input[2]);
+                            CreateActivityGroup(input[1],Integer.parseInt(input[2]));
                         }
                     } break;
                     case "list ": {
@@ -167,6 +176,7 @@ public class InputHandler {
                         }
                     } break;
                     case "back": {
+                        SetState(InputHandlerState.MAIN);
                     }
                     default: {
                         System.out.println("Invalid command: " + cmd);
@@ -197,7 +207,16 @@ public class InputHandler {
     }
 
     public void ListActivity() {
-        Activity.getAll(this.con);
+
+        ArrayList<Activity> dbActivities = Activity.getAll(con);
+
+        for (Activity activity: dbActivities) {
+            String ID = Integer.toString(activity.ID);
+
+            System.out.println("Name: " + activity.name);
+            System.out.println("    ID: " + ID);
+            System.out.println("    Description: " + activity.description);
+        }
     }
 
     public void DeleteActivity(String name) {
@@ -206,8 +225,8 @@ public class InputHandler {
 
     // ---- ActivityGroup ---
 
-    public void CreateActivityGroup(String name, String belongsToGroup){
-        ActivityGroup.create(this.con, name, Integer.parseInt(belongsToGroup));
+    public void CreateActivityGroup(String name, Integer belongsToGroup){
+        ActivityGroup.create(this.con, name, belongsToGroup);
     }
 
     public void ListGroupActivities(String name){
@@ -373,6 +392,66 @@ public class InputHandler {
         return  inputActivities;
     }
 
+
+    public ArrayList<List> GetResultsFromUser(int workoutID) {
+
+        ArrayList<Integer> activitiesID = Workout.getActivitiesFromWorkout(con, workoutID);
+        ArrayList<Activity> dbActivities = Activity.getAll(con);
+        System.out.println("Add result:");
+
+        ArrayList<StrengthResult> strengthResults = new ArrayList<>();
+        ArrayList<CardioResult> cardioResults = new ArrayList<>();
+
+        Scanner scanner = new Scanner(System.in);
+
+
+        for (Activity activity: dbActivities) {
+            if (activitiesID.contains(activity.ID)) {
+                System.out.println("Name: " + activity.name + " ID: " + activity.ID);
+
+                System.out.println("[Weight kg] [Sets] [Reps] for strength activities");
+                System.out.println("[Distance km] [Duration sec] for cardio activities");
+
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("done")) {
+                    break;
+                }
+
+                String[] inputList = input.split(" ");
+
+                try {
+                    if (inputList.length == 3) {
+                        float weight = Float.parseFloat(inputList[0]);
+                        int sets = Integer.parseInt(inputList[1]);
+                        int reps = Integer.parseInt(inputList[2]);
+                        StrengthResult sr = new StrengthResult(activity.ID, workoutID, weight, sets, reps);
+                        strengthResults.add(sr);
+
+                    } else if (inputList.length == 2) {
+                        float distance = Float.parseFloat(inputList[0]);
+                        float duration = Float.parseFloat(inputList[1]);
+                        CardioResult cr = new CardioResult(activity.ID, workoutID, distance, duration);
+                        cardioResults.add(cr);
+                    } else {
+                        System.out.println("Invalid input");
+                    }
+
+                } catch (Exception ex) {
+                    System.out.println("Invalid input");
+                }
+            }
+        }
+
+
+        ArrayList results = new ArrayList<>();
+        results.add(strengthResults);
+        results.add(cardioResults);
+
+        return results;
+    }
+
+
+
     public void StartWorkout() {
         Scanner scanner = new Scanner(System.in);
 
@@ -389,7 +468,7 @@ public class InputHandler {
             String notes = null;
             Integer spectators = null;
 
-            String input;
+            String input = null;
 
             while (date == null) {
                 System.out.println("Date in format(DD.MM.YYYY-HH:MM) or (now)");
@@ -444,48 +523,70 @@ public class InputHandler {
                 }
             }
 
-            System.out.println("Indoor or outdoor?");
-            input = scanner.nextLine();
 
-            if (input.equalsIgnoreCase("indoor")) {
-                String airQuality = null;
+            int workoutID = 0;
+            while (!input.equalsIgnoreCase("indoor") || !input.equalsIgnoreCase("outdoor")) {
 
-                while (airQuality == null) {
-                    System.out.println("Input air quality (Text): ");
-                    airQuality = scanner.nextLine();
-                }
+                System.out.println("Indoor or outdoor?");
+                input = scanner.nextLine();
 
+                if (input.equalsIgnoreCase("indoor")) {
+                    String airQuality = null;
 
-                ArrayList<Integer> activityList = GetActivitiesFromUser();
-                Workout.createIndoor(con, activityList, date, shape, performance, notes, spectators, airQuality);
-                return;
-            } else if(input.equalsIgnoreCase("outdoor")) {
-
-                String weather = null;
-                Float temp = null;
-
-                while (weather == null) {
-                    System.out.println("Input weather (Text): ");
-                    weather = scanner.nextLine();
-                }
-
-                while (temp == null) {
-                    System.out.println("Input temperature (Decimal number): ");
-                    input = scanner.nextLine();
-                    try {
-                        temp = Float.parseFloat(input);
-                    } catch (NumberFormatException ex) {
-                        System.out.println("Invalid input: " + input);
+                    while (airQuality == null) {
+                        System.out.println("Input air quality (Text): ");
+                        airQuality = scanner.nextLine();
                     }
 
-                }
 
-                ArrayList<Integer> activityList = GetActivitiesFromUser();
-                Workout.createOutdoor(con, activityList, date, shape, performance, notes, spectators, weather, temp);
-                return;
-            } else {
-                System.out.println("Invalid input: " + input);
+                    ArrayList<Integer> activityList = GetActivitiesFromUser();
+                    workoutID = Workout.createIndoor(con, activityList, date, shape, performance, notes, spectators, airQuality);
+                    break;
+                } else if(input.equalsIgnoreCase("outdoor")) {
+
+                    String weather = null;
+                    Float temp = null;
+
+                    while (weather == null) {
+                        System.out.println("Input weather (Text): ");
+                        weather = scanner.nextLine();
+                    }
+
+                    while (temp == null) {
+                        System.out.println("Input temperature (Decimal number): ");
+                        input = scanner.nextLine();
+                        try {
+                            temp = Float.parseFloat(input);
+                        } catch (NumberFormatException ex) {
+                            System.out.println("Invalid input: " + input);
+                        }
+                    }
+
+                    ArrayList<Integer> activityList = GetActivitiesFromUser();
+                    workoutID = Workout.createOutdoor(con, activityList, date, shape, performance, notes, spectators, weather, temp);
+                    break;
+                } else {
+                    System.out.println("Invalid input: " + input);
+                }
             }
+
+
+            List results = GetResultsFromUser(workoutID);
+            ArrayList<StrengthResult> strengthResults = (ArrayList<StrengthResult>) results.get(0);
+            ArrayList<CardioResult> cardioResults = (ArrayList<CardioResult>) results.get(1);
+
+            for (StrengthResult sr: strengthResults) {
+                Result.addStrengthResult(this.con, sr.activityID, workoutID, sr.weight, sr.sets, sr.reps);
+            }
+
+            for (CardioResult cr: cardioResults) {
+                Result.addCardioResult(this.con, cr.activityID, workoutID, cr.lenght, cr.duration);
+            }
+
+            System.out.println("All results added!\n");
+            return;
+
+
         }
     }
 

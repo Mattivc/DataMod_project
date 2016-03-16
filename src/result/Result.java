@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Result {
 
-    int activityID, workoutID;
+    public int activityID, workoutID;
 
     public Result(int activityID, int workoutID) {
         this.activityID = activityID;

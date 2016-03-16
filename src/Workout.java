@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Workout {
 
-    public static boolean createOutdoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
+    public static int createOutdoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
 
         int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, null);
 
@@ -14,23 +14,23 @@ public class Workout {
             post.setString(2, weather);
             post.setFloat(3, temp);
             post.execute();
-            return true;
+            return ØktID;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return ØktID;
         }
 
     }
 
 
-    public static boolean createOutdoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
+    public static void createOutdoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
         ArrayList<Integer> activities = Workout.getActivitiesFromWorkout(connection, template);
-        return Workout.createOutdoor(connection, activities, date, shape, performance, notes, spectators, weather, temp);
+        Workout.createOutdoor(connection, activities, date, shape, performance, notes, spectators, weather, temp);
     }
 
 
-    public static boolean createIndoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
+    public static int createIndoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
 
         int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, null);
 
@@ -39,16 +39,16 @@ public class Workout {
             post.setInt(1, ØktID);
             post.setString(2, airQuality);
             post.execute();
-            return true;
+            return ØktID;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false;
+            return ØktID;
         }
     }
 
-    public static boolean createIndoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
+    public static void createIndoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
         ArrayList<Integer> activities = Workout.getActivitiesFromWorkout(connection, template);
-        return Workout.createIndoor(connection, activities, date, shape, performance, notes, spectators, airQuality);
+        Workout.createIndoor(connection, activities, date, shape, performance, notes, spectators, airQuality);
     }
 
 
