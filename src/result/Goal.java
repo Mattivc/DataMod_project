@@ -5,67 +5,147 @@ import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Goal {
+public abstract class Goal {
 
-    int activityID, exerciseID;
+    int activityID, goalID;
     Date date;
     Boolean completed;
 
 
-    public Goal(int activityID, int exerciseID) {
+    public Goal(int goalID, int activityID) {
         this.activityID = activityID;
-        this.exerciseID = exerciseID;
+        this.goalID = goalID;
         this.date = null;
         this.completed = false;
     }
 
 
-    public Goal(int activityID, int exerciseID, Date date, Boolean completed) {
-
+    public Goal(int goalID, int activityID, Date date, Boolean completed) {
         this.activityID = activityID;
-        this.exerciseID = exerciseID;
+        this.goalID = goalID;
         this.date = date;
         this.completed = completed;
     }
 
 
-    @Override
-    public String toString() {
-        return this.activityID + " " + this.exerciseID + " " + this.date + " " + this.completed;
-    }
 
 
-    private static boolean create(Connection con, int activityID, int workoutID) {
+    public static boolean createStrengthGoal(Connection con, int activityID, float weight, int sets, int reps) {
+
         try {
 
-            PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
+            PreparedStatement st = con.prepareStatement("INSERT INTO STYRKEMÅL(ØvelseID, Belastning, Antall_sett, Antall_reps) VALUES (?,?,?,?)");
             st.setInt(1, activityID);
-            st.setInt(2, workoutID);
-            st.setBoolean(3, false);
+            st.setFloat(2, weight);
+            st.setInt(3, sets);
+            st.setInt(4, reps);
             st.execute();
 
+            return true;
         }
         catch (java.sql.SQLException ex) {
             ex.printStackTrace();
             return false;
         }
-        return true;
+
     }
 
 
-    public static boolean createStrengthGoal(Connection con, int activityID, int workoutID, float weight, int sets, int reps) {
-        return Goal.create(con, activityID, workoutID) && Result.addStrengthResult(con, activityID, workoutID, weight, sets, reps);
-    }
+    public static boolean createCardioGoal(Connection con, int activityID, float length, float duration) {
 
-
-    public static boolean createCardioGoal(Connection con, int activityID, int workoutID, float length, float duration) {
-        return Goal.create(con, activityID, workoutID) && Result.addCardioResult(con, activityID, workoutID, length, duration);
-    }
-
-
-    public static Boolean delete(Connection con, int activityID, int worokoutID) {
         try {
-            con.createStatement().execute("DELETE FROM MÅL WHERE ØvelseID LIKE "+activityID+" AND MÅL.TreningsØktID LIKE "+worokoutID+"");
+            PreparedStatement st = con.prepareStatement("INSERT INTO KONDISJONMÅL(ØvelseID, Lengde, Tid) VALUES (?,?,?)");
+            st.setInt(1, activityID);
+            st.setFloat(2, length);
+            st.setFloat(3, duration);
+            st.execute();
+            return true;
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean setCardioGoalAsCompleted(Connection con, int goalID) {
+
+        try {
+            Date date = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            PreparedStatement st = con.prepareStatement("UPDATE KONDISJONMÅL SET Oppnådd=?, Dato=? WHERE KONDISJONMÅL.MålID LIKE "+goalID+"");
+            st.setBoolean(1, true);
+            st.setDate(2, sqlDate);
+            st.execute();
+            return true;
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean setStrengthGoalAsCompleted(Connection con, int goalID) {
+        try {
+            Date date = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            PreparedStatement st = con.prepareStatement("UPDATE STYRKEMÅL SET Oppnådd=?, Dato=? WHERE STYRKEMÅL.MålID LIKE "+goalID+"");
+            st.setBoolean(1, true);
+            st.setDate(2, sqlDate);
+            st.execute();
+            return true;
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public static ArrayList<CardioGoal> getCardioGoals(Connection con) {
+        try {
+
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM KONDISJONMÅL");
+
+            ArrayList cardioGoals = new ArrayList();
+            while (rs.next()) {
+
+                int goalID = rs.getInt("MålID");
+                int actID = rs.getInt("ØvelseID");
+                float length = rs.getFloat("Lengde");
+                float duration = rs.getFloat("Tid");
+                Date date = rs.getDate("Dato");
+                boolean completed = rs.getBoolean("Oppnådd");
+
+                CardioGoal goal = new CardioGoal(goalID, actID, )
+                cardioResults.add(result);
+            }
+
+            return cardioResults;
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
+    public static boolean deletCardioGoal(Connection con, int goalID) {
+        try {
+            con.createStatement().execute("DELETE FROM KONDISJONMÅL WHERE MålID LIKE "+goalID+"");
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteStrengthGoal(Connection con, int goalID) {
+        try {
+            con.createStatement().execute("DELETE FROM STYRKEMÅL WHERE MålID LIKE "+goalID+"");
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -74,7 +154,7 @@ public class Goal {
     }
 
 
-    public static ArrayList<Goal> getAll(Connection con) {
+    /*public static ArrayList<Goal> getAll(Connection con) {
 
         try {
 
@@ -134,7 +214,7 @@ public class Goal {
         return setAsCompleted(con, goal.activityID, goal.exerciseID);
     }
 
-
+*/
     public static void main(String[] args){
         Connection con = null;
         Statement st = null;
@@ -146,7 +226,7 @@ public class Goal {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            Goal.delete(con, 1, 1);
+            Goal.deleteStrengthGoal(con, 1);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
