@@ -1,10 +1,11 @@
+import result.Goal;
+
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -432,7 +433,7 @@ public class InputHandler {
                     "Create [Name] [Description] (Replacement) (Group)- Create a new activity\n" +
                     "List - List all activities\n" +
                     "Delete [Name] - Delete a existing activity\n" +
-                    "Back - Return to main menu\n" +
+                    "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
                 );
                 break;
@@ -444,7 +445,7 @@ public class InputHandler {
                     "ListTemplates - List all workouts\n" +
                     "ListActivities [Name] - List all activities in a template\n" +
                     "DeleteTemplate [Name] - Delete a existing workout template\n" +
-                    "Back - Return to main menu\n" +
+                    "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
                 );
                 break;
@@ -456,7 +457,7 @@ public class InputHandler {
                     "Reach [ActivityID] [ExerciseID] [YES/NO]- Say if the goal was reached or not\n" +
                     "List - List all goals\n" +
                     "Delete [ActivityID] [ExerciseID] - Delete an existing goal for the given activity in exercise\n" +
-                    "Back - Return to main menu\n" +
+                    "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
                 );
                 break;
@@ -467,7 +468,7 @@ public class InputHandler {
                     "Create [Name] (Group)- Create a new group, optionally belonging to another group\n" +
                     "List [name] - List existing ActivityGroups\n" +
                     "Delete [Name] - Delete an existing ActivityGroup\n" +
-                    "Back - Return to main menu\n" +
+                    "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
                 );
                 break;

@@ -1,12 +1,8 @@
-import com.sun.org.apache.xpath.internal.operations.Bool;
+package result;
 
-import javax.swing.plaf.nimbus.State;
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Calendar;
-import java.util.HashMap;
 
 
 public class Goal {
@@ -42,8 +38,8 @@ public class Goal {
     public static Goal create(Connection con, int activityID, int exerciseID) {
 
 
-
         try {
+
             PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
             st.setInt(1, activityID);
             st.setInt(2, exerciseID);
