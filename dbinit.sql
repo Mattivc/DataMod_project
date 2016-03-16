@@ -55,14 +55,28 @@ CREATE TABLE RESULTAT   (
     FOREIGN KEY(TreningsØktID)   REFERENCES TreningsØkt(TreningsØktID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE MÅL   (
-    ØvelseID        INT        NOT NULL,
-    TreningsØktID   INT        NOT NULL,
+
+CREATE TABLE STYRKEMÅL (
+    MålID            INT            NOT NULL AUTO_INCREMENT,
+    ØvelseID            INT    NOT NULL,
+    Belastning          FLOAT,
+    Antall_sett         INT,
+    Antall_reps         INT,
     Dato            DATE,
     Oppnådd	BOOLEAN NOT NULL DEFAULT 0,
-    PRIMARY KEY(ØvelseID, TreningsØktID),
-    FOREIGN KEY(ØvelseID)        REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY(TreningsØktID)   REFERENCES TreningsØkt(TreningsØktID) ON DELETE CASCADE ON UPDATE CASCADE
+    PRIMARY KEY (MålID),
+    FOREIGN KEY(ØvelseID)         REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE,
+);
+
+CREATE TABLE KONDISJONMÅL (
+    MålID            INT            NOT NULL AUTO_INCREMENT,
+    ØvelseID            INT    NOT NULL,
+    Lengde              FLOAT,
+    Tid                 FLOAT,
+    Dato            DATE,
+    Oppnådd	BOOLEAN NOT NULL DEFAULT 0,
+    PRIMARY KEY (MålID),
+    FOREIGN KEY(ØvelseID)         REFERENCES ØVELSE(ØvelseID) ON DELETE CASCADE ON UPDATE CASCADE,
 );
 
 CREATE TABLE STYRKE (

@@ -209,7 +209,7 @@ public class InputHandler {
 
     // ------ GOAL ------
     public void CreateGoal(int activityID, int exerciseID){
-        Goal.create(con, activityID, exerciseID);
+        //Goal.create(con, activityID, exerciseID);
 
     }
 

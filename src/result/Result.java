@@ -63,11 +63,12 @@ public class Result {
         }
     }
 
-    public static ArrayList getStrengthResultsForWorkout(Connection connection, int workoutID) {
+    public static ArrayList<StrengthResult> getStrengthResultsForWorkout(Connection connection, int workoutID) {
         try {
 
-            PreparedStatement post = connection.prepareStatement("SELECT * FROM STYRKE WHERE TreningsØktID = ?");
+            PreparedStatement post = connection.prepareStatement("SELECT ØvelseID,TreningsØktID FROM STYRKE WHERE TreningsØktID = ? AND NOT EXISTS (SELECT ØvelseID, TreningsØktID FROM MÅL WHERE TreningsØktID=?)");
             post.setInt(1, workoutID);
+            post.setInt(2, workoutID);
             ResultSet rs = post.executeQuery();
 
             ArrayList strengthResults = new ArrayList();
@@ -132,8 +133,8 @@ public class Result {
         try {
             con = DriverManager.getConnection(url, user, password);
             //Result.addStrengthResult(con, 1,1, (float)20.0, 3, 12);
-            Result.getStrengthResultsForWorkout(con, 1);
-
+            //ArrayList<StrengthResult> results = Result.getStrengthResultsForWorkout(con, 1);
+            //System.out.print(results.size());
 
         } catch (SQLException ex) {
             ex.printStackTrace();
