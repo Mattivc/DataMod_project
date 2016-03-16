@@ -42,6 +42,7 @@ public class Goal {
     public static Goal create(Connection con, int activityID, int exerciseID) {
 
 
+
         try {
             PreparedStatement st = con.prepareStatement("INSERT INTO MÅL (ØvelseID, TreningsØktID, Oppnådd) VALUES (?,?,?)");
             st.setInt(1, activityID);
