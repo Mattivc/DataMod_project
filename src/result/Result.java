@@ -98,8 +98,8 @@ public class Result {
 
         try {
 
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM (SELECT  * FROM RESULTAT JOIN KON)");
-            ResultSet rs2 = con.createStatement().executeQuery("SELECT * FROM STYRKE JOIN ØVELSE ON KONDISJON.ØvelseID = ØVELSE.ØvelseID WHERE ØVELSE.ØvelseID LIKE "+activityID+"");
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM KONDISJON WHERE ØvelseID LIKE "+activityID+"");
+            ResultSet rs2 = con.createStatement().executeQuery("SELECT * FROM STYRKE WHERE  ØvelseID LIKE "+activityID+"");
             ArrayList<Result> results = new ArrayList<>();
             results.addAll(createCardioResultsFromResultSet(rs));
             results.addAll(createStrengthResultsFromResultSet(rs2));

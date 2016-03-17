@@ -71,8 +71,8 @@ public class InputHandler {
                         } break;
                     case "results":
                         if (NumArgs(input, 2)) {
-                            // TODO : List results for activity
-                        }
+                            ListResultsForActivity(input[1]);
+                        } break;
                     case "delete":
                         if (NumArgs(input, 2)) {
                             DeleteActivity(input[1]);
@@ -373,11 +373,23 @@ public class InputHandler {
 
     public void ListResultsForActivity(String activityID) {
 
-        /*Integer actID = stringToInt(activityID);
+        Integer actID = stringToInt(activityID);
 
         if (actID != null) {
-            ArrayList<Result> results =
-        }*/
+            ArrayList<Result> results = Result.getResultsForActivity(con, actID);
+
+            for (Result result : results) {
+                if (result instanceof CardioResult) {
+                    CardioResult cr = (CardioResult) result;
+                    System.out.println((results.indexOf(result) + 1) + ". Lengde: " + cr.lenght + " | Tid: " + cr.duration);
+
+                }
+                else if (result instanceof StrengthResult) {
+                    StrengthResult sr = (StrengthResult) result;
+                    System.out.println((results.indexOf(result) + 1) + ". Vekt: " + sr.weight + " | Sett: " + sr.sets + " | Reps: " + sr.reps);
+                }
+            }
+        }
 
 
     }
