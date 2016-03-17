@@ -121,6 +121,29 @@ public abstract class Goal {
         try {
 
             ResultSet rs = con.createStatement().executeQuery("SELECT * FROM KONDISJONMÅL");
+            return Goal.getCardioGoalsFromResultSet(rs);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<StrengthGoal> getStrengthGoals(Connection con) {
+        try {
+
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM STYRKEMÅL");
+
+            return Goal.getStrengthGoalsFromResultSet(rs);
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    protected static ArrayList<CardioGoal> getCardioGoalsFromResultSet(ResultSet rs) {
+        try {
 
             ArrayList<CardioGoal> cardioGoals = new ArrayList();
             while (rs.next()) {
@@ -145,10 +168,8 @@ public abstract class Goal {
         }
     }
 
-    public static ArrayList<StrengthGoal> getStrengthGoals(Connection con) {
+    protected static ArrayList<StrengthGoal> getStrengthGoalsFromResultSet(ResultSet rs) {
         try {
-
-            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM STYRKEMÅL");
 
             ArrayList<StrengthGoal> strengthGoals = new ArrayList();
             while (rs.next()) {
@@ -161,10 +182,9 @@ public abstract class Goal {
                 Date date = rs.getDate("Dato");
                 boolean completed = rs.getBoolean("Oppnådd");
 
-                strengthGoals.add(new StrengthGoal(goalID, actID, weight, set, reps));
+                strengthGoals.add(new StrengthGoal(goalID, actID, weight, set, reps, date, completed));
 
             }
-
             return strengthGoals;
 
 
