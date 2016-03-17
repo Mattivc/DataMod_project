@@ -95,6 +95,42 @@ public class Result {
         }
     }
 
+    public static Result getResult(Connection con, int workoutID, int activityID) {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM KONDISJON WHERE TreningsØktID = "+workoutID+" AND ØvelseID = "+activityID+"");
+            if (rs.next()) {
+                int actID = rs.getInt("ØvelseID");
+                int wID = rs.getInt("TreningsØktID");
+                float length = rs.getFloat("Lengde");
+                float duration = rs.getFloat("Tid");
+                return new CardioResult(actID, wID, length, duration);
+            }
+            else {
+                ResultSet rs2 = con.createStatement().executeQuery("SELECT * FROM STYRKE WHERE TreningsØktID = "+workoutID+" AND ØvelseID = "+activityID+"");
+                if (rs2.next()) {
+                    int actID = rs2.getInt("ØvelseID");
+                    int wID = rs2.getInt("TreningsØktID");
+                    float weight = rs2.getFloat("Belastning");
+                    int set = rs2.getInt("Antall_sett");
+                    int reps = rs2.getInt("Antall_reps");
+                    return new StrengthResult(actID, wID, weight, set, reps);
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+
+
+
+    }
+
     public static ArrayList<Result> getResultsForActivity(Connection con, int activityID) {
 
         try {
