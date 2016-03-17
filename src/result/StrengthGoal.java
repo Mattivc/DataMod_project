@@ -1,5 +1,6 @@
 package result;
 
+import java.sql.ResultSet;
 import java.util.Date;
 
 /**
@@ -23,6 +24,8 @@ public class StrengthGoal extends Goal {
         this.sets = sets;
         this.reps = reps;
     }
+
+
 
 
     public float getWeight() {

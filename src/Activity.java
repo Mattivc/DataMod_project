@@ -1,5 +1,7 @@
 
+import result.Goal;
 import result.Result;
+import result.StrengthGoal;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -109,6 +111,26 @@ public class Activity {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public static ArrayList<Goal> getGoalsForActivity(Connection con,int activityID) {
+
+        try {
+
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM ØVELSE JOIN STYRKEMÅL ON ØVELSE.ØvelseID = STYRKEMÅL.ØvelseID WHERE STYRKEMÅL.ØvelseID LIKE "+activityID+"");
+            ResultSet rs2 = con.createStatement().executeQuery("SELECT * FROM ØVELSE JOIN KONDISJONMÅL ON ØVELSE.ØvelseID = KONDISJONMÅL.ØvelseID WHERE KONDISJONMÅL.ØvelseID LIKE "+activityID+"");
+
+            ArrayList<Goal> goals = new ArrayList<>();
+
+            goals.addAll(Goal.getStrengthGoalsFromResultSet(rs));
+            goals.addAll(Goal.getCardioGoalsFromResultSet(rs2));
+            return goals;
+
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
 
 
     }
@@ -125,7 +147,7 @@ public class Activity {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            System.out.print(getActivitiesForWorkout(con, 1));
+            System.out.print(getGoalsForActivity(con, 1));
 
         } catch (SQLException ex) {
             ex.printStackTrace();

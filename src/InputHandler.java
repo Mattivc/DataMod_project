@@ -592,7 +592,9 @@ public class InputHandler {
         }
     }
 
-    public void StartWorkout(String template){}
+    public void StartWorkout(String template){
+
+    }
 
     public void ListWorkouts() {
         ArrayList<Workout> workouts = Workout.getAll(con);

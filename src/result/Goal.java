@@ -142,7 +142,7 @@ public abstract class Goal {
         }
     }
 
-    protected static ArrayList<CardioGoal> getCardioGoalsFromResultSet(ResultSet rs) {
+    public static ArrayList<CardioGoal> getCardioGoalsFromResultSet(ResultSet rs) {
         try {
 
             ArrayList<CardioGoal> cardioGoals = new ArrayList();
@@ -168,7 +168,7 @@ public abstract class Goal {
         }
     }
 
-    protected static ArrayList<StrengthGoal> getStrengthGoalsFromResultSet(ResultSet rs) {
+    public static ArrayList<StrengthGoal> getStrengthGoalsFromResultSet(ResultSet rs) {
         try {
 
             ArrayList<StrengthGoal> strengthGoals = new ArrayList();
