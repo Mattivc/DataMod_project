@@ -92,7 +92,7 @@ public class InputHandler {
                     case "listtemplates":
                         if (NumArgs(input, 1)) {
 
-
+                            ListWorkouts();
 
                         } break;
                     case "listactivities":
@@ -598,10 +598,17 @@ public class InputHandler {
         ArrayList<Workout> workouts = Workout.getAll(con);
 
         for (Workout workout : workouts) {
-           // ArrayList<Activity> activities = Activity.
+           ArrayList<Activity> activities = Activity.getActivitiesForWorkout(con,workout.workoutID);
 
+            System.out.println("WORKOUT - " + workout.date + "\n" +
+            "------------------------------------------------------\n" +
+            "ID: " + workout.workoutID + " MalID: " + workout.templateID + " Form: " + workout.shape + "\n" +
+            "Prestasjon: " + workout.prestation + " Tilskuere: " + workout.viewers + "\nNotat: " + workout.note + "\n" +
+            "------------------------------------------------------");
 
-
+            for (Activity activity : activities) {
+                System.out.println((activities.indexOf(activity) + 1) + ". " + activity.name + " -  Beskrivelse: " + activity.description + " Gruppe: " + activity.groupID + " Erstatning: " + activity.replacement);
+            }
 
         }
 
