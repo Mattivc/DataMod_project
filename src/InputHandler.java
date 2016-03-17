@@ -772,8 +772,7 @@ public class InputHandler {
                     "Workout Commands: \n" +
                     "StartWorkout [Template(Optional)] - Start new workout\n" +
                     "List - List all workouts\n" +
-                    "ListActivities [Name] - List all activities in a template\n" +
-                    "DeleteTemplate [Name] - Delete a existing workout template\n" +
+                    "Delete [ID] - Delete an existing workout\n" +
                     "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
                 );
