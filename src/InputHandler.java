@@ -148,6 +148,10 @@ public class InputHandler {
                         if (NumArgs(input, 3)){
                             DeleteGoal(input[1], input[2]);
                         } break;
+                    case "activitygoals":
+                        if (NumArgs(input, 2)) {
+                            ListGoalsForActivity(input[1]);
+                        } break;
                     case "back":
                         if (NumArgs(input, 1)) {
                             SetState(InputHandlerState.MAIN);
@@ -313,6 +317,33 @@ public class InputHandler {
 
     }
 
+    public void ListGoalsForActivity(String activityID) {
+
+        try {
+            int actID = Integer.parseInt(activityID);
+
+            ArrayList<Goal> goals = Activity.getGoalsForActivity(con, actID);
+
+            for (Goal goal : goals) {
+                if (goal instanceof StrengthGoal) {
+                    StrengthGoal sg = (StrengthGoal) goal;
+                    System.out.println("Type: Strength" + " | ID: " + sg.getGoalID() + " | ØvelseID: " + sg.getActivityID() + " | Weight: " + sg.getWeight() + " | Set: " + sg.getSets() + " | Reps: " + sg.getReps() + " | Fullført: " + sg.getCompleted());
+                }
+                else if (goal instanceof CardioGoal) {
+
+                    CardioGoal cg = (CardioGoal) goal;
+                    System.out.println("Type: Cardio" + " | ID: " + cg.getGoalID() + " | ØvelseID: " + cg.getActivityID() + " | Lengde: " + cg.getLenght() + " | Tid: " + cg.getDuration() + " | Fullført: " + cg.getCompleted());
+
+                }
+            }
+
+        }
+        catch (NumberFormatException ex) {
+            System.out.println("Input error");
+        }
+
+    }
+
     public void DeleteGoal(String goalID, String type){
 
         try {
@@ -329,7 +360,7 @@ public class InputHandler {
             }
         }
         catch (NumberFormatException ex) {
-            System.out.println();
+            System.out.println("Error in input");
         }
 
     }
@@ -664,6 +695,7 @@ public class InputHandler {
                     "Create [ActivityID] [Length(Kilometres)] [Duration(Seconds)] - Create new goal for cardioexercise\n" +
                     "Reach [GoalID] [Cardio/Strength]- Marks the goal as reached\n" +
                     "List [Cardio/Strength/All] - List all goals\n" +
+                    "ActivtyGoals [ActivityID] - List all goals for activity\n" +
                     "Delete [GoalID] [Cardio/Strength] - Delete an existing goal\n" +
                     "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
