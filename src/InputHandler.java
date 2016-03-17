@@ -92,6 +92,8 @@ public class InputHandler {
                     case "listtemplates":
                         if (NumArgs(input, 1)) {
 
+
+
                         } break;
                     case "listactivities":
                         if (NumArgs(input, 1)) {
@@ -590,7 +592,21 @@ public class InputHandler {
         }
     }
 
-    public void StartWorkout(String template) {}
+    public void StartWorkout(String template){}
+
+    public void ListWorkouts() {
+        ArrayList<Workout> workouts = Workout.getAll(con);
+
+        for (Workout workout : workouts) {
+           // ArrayList<Activity> activities = Activity.
+
+
+
+
+        }
+
+
+    }
 
 
     public void SetState(InputHandlerState newState) {

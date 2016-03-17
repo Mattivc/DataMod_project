@@ -1,4 +1,6 @@
 
+import result.Result;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -56,7 +58,7 @@ public class Activity {
         return true;
     }
 
-    public static ArrayList getAll(Connection con) {
+    public static ArrayList<Activity> getAll(Connection con) {
         try {
 
             PreparedStatement post = con.prepareStatement("SELECT * FROM ØVELSE");
@@ -84,6 +86,33 @@ public class Activity {
         }
     }
 
+    public static ArrayList<Activity> getActivitiesForWorkout(Connection con, int workoutID) {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM ØVELSE JOIN TRENINGSØKTØVELSE ON TRENINGSØKTØVELSE.ØvelseID LIKE ØVELSE.ØvelseID JOIN TRENINGSØKT ON TRENINGSØKTØVELSE.TreningsØktID LIKE TRENINGSØKT.TreningsØktID WHERE TRENINGSØKT.TreningsØktID LIKE "+workoutID+"");
+            ArrayList<Activity> activities = new ArrayList<>();
+            while (rs.next()) {
+
+                int activityID = rs.getInt("ØvelseID");
+                int replacement = rs.getInt("Erstatning");
+                int groupID = rs.getInt("GruppeID");
+                String name = rs.getString("Navn");
+                String desc = rs.getString("Beskrivelse");
+
+                Activity activity = new Activity(activityID, name, desc, replacement, groupID);
+                activities.add(activity);
+            }
+
+            return activities;
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+
+    }
+
 
     public static void main(String[] args){
         Connection con = null;
@@ -96,8 +125,7 @@ public class Activity {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            Activity.add(con, "Benk", "Press", null, null);
-            //Activity.getAll(con);
+            System.out.print(getActivitiesForWorkout(con, 1));
 
         } catch (SQLException ex) {
             ex.printStackTrace();

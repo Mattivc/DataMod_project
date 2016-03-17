@@ -165,14 +165,14 @@ public class Workout {
             while (rs.next()) {
 
                 int workoutID = rs.getInt("TreningsøktID");
-                Integer templateID = rs.getInt("MalID");
+                Integer templateID = rs.getInt("ØktMalID");
                 //Date date = rs.getDate("Dato_tid"
                 Integer shape = rs.getInt("Form");
                 Integer prestation = rs.getInt("Prestasjon");
                 String note = rs.getString("Notat");
                 Integer viewers = rs.getInt("Antall_tilskuere");
 
-                workouts.add(new Workout(workoutID, templateID, null, shape, prestation, note, viewers))
+                workouts.add(new Workout(workoutID, templateID, null, shape, prestation, note, viewers));
 
             }
             return workouts;
@@ -181,9 +181,6 @@ public class Workout {
             ex.printStackTrace();
             return null;
         }
-
-
-
     }
 
 
