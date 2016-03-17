@@ -1,8 +1,27 @@
 
+import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
+
 import java.sql.*;
 import java.util.ArrayList;
 
 public class Workout {
+
+    int workoutID;
+    Integer shape, prestation, templateID, viewers;
+    Date date;
+    String note;
+
+
+    public Workout(int workoutID, Integer templateID, Date date, Integer shape, Integer prestation, String note, Integer viewers) {
+        this.workoutID = workoutID;
+        this.templateID = templateID;
+        this.date = date;
+        this.shape = shape;
+        this.prestation = prestation;
+        this.note = note;
+        this.viewers = viewers;
+    }
+
 
     public static int createOutdoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
 
@@ -136,6 +155,36 @@ public class Workout {
         return true;
     }
 
+    public static ArrayList<Workout> getAll(Connection con) {
+
+        try {
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM TRENINGSØKT");
+
+            ArrayList<Workout> workouts = new ArrayList<>();
+
+            while (rs.next()) {
+
+                int workoutID = rs.getInt("TreningsøktID");
+                Integer templateID = rs.getInt("MalID");
+                //Date date = rs.getDate("Dato_tid"
+                Integer shape = rs.getInt("Form");
+                Integer prestation = rs.getInt("Prestasjon");
+                String note = rs.getString("Notat");
+                Integer viewers = rs.getInt("Antall_tilskuere");
+
+                workouts.add(new Workout(workoutID, templateID, null, shape, prestation, note, viewers))
+
+            }
+            return workouts;
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+
+
+    }
 
 
     public static void main(String[] args){
