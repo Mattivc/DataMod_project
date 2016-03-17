@@ -182,32 +182,4 @@ public class Workout {
             return null;
         }
     }
-
-
-    public static void main(String[] args){
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-
-        String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
-        String user = "user";
-        String password = "12345678";
-
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            java.util.Date utilDate = new java.util.Date();
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            ArrayList<Integer> activities = new ArrayList<Integer>();
-            activities.add(1);
-            //Workout.createOutdoor(con, activities, sqlDate, 4, 4, "Notes", 0, "Pretty good", (float)22.1, null);
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-
-        }
-
-    }
-
-
 }
