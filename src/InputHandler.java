@@ -105,9 +105,9 @@ public class InputHandler {
                         } break;
                     case "startworkout":
                         if (input.length == 1) {
-                            StartWorkout();
+                            StartWorkout(-1);
                         } else if (input.length == 2) {
-                            StartWorkout(input[1]);
+                            StartWorkout(Integer.parseInt(input[1]));
                         } else {
                             System.out.println("Wrong number of arguments");
                             SetState(this.state);
@@ -512,7 +512,7 @@ public class InputHandler {
 
 
 
-    public void StartWorkout() {
+    public void StartWorkout(int templateID) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print(
@@ -598,9 +598,14 @@ public class InputHandler {
                         airQuality = scanner.nextLine();
                     }
 
+                    if (templateID == -1) {
+                        ArrayList<Integer> activityList = GetActivitiesFromUser();
+                        workoutID = Workout.createIndoor(con, activityList, date, shape, performance, notes, spectators, airQuality, null);
+                    } else {
+                        System.out.println("Got activities from template");
+                        workoutID = Workout.createIndoorFromTemplate(con, templateID, date, shape, performance, notes, spectators, airQuality);
+                    }
 
-                    ArrayList<Integer> activityList = GetActivitiesFromUser();
-                    workoutID = Workout.createIndoor(con, activityList, date, shape, performance, notes, spectators, airQuality);
                     break;
                 } else if(input.equalsIgnoreCase("outdoor")) {
 
@@ -621,9 +626,14 @@ public class InputHandler {
                             System.out.println("Invalid input: " + input);
                         }
                     }
+                    if (templateID == -1) {
+                        ArrayList<Integer> activityList = GetActivitiesFromUser();
+                        workoutID = Workout.createOutdoor(con, activityList, date, shape, performance, notes, spectators, weather, temp, null);
+                    } else {
+                        System.out.println("Got activities from template");
+                        workoutID = Workout.createOutdoorFromTemplate(con, templateID, date, shape, performance, notes, spectators, weather, temp);
+                    }
 
-                    ArrayList<Integer> activityList = GetActivitiesFromUser();
-                    workoutID = Workout.createOutdoor(con, activityList, date, shape, performance, notes, spectators, weather, temp);
                     break;
                 } else {
                     System.out.println("Invalid input: " + input);
@@ -645,13 +655,7 @@ public class InputHandler {
 
             System.out.println("All results added!\n");
             return;
-
-
         }
-    }
-
-    public void StartWorkout(String template){
-
     }
 
     public void ListWorkouts() {

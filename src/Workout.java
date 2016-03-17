@@ -23,9 +23,9 @@ public class Workout {
     }
 
 
-    public static int createOutdoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
+    public static int createOutdoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp, Integer templateID) {
 
-        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, null);
+        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, templateID);
 
         try {
             PreparedStatement post = connection.prepareStatement("INSERT INTO UTENDØRS (TreningsØktID, Vær, Temp) VALUES (?, ?, ?)");
@@ -43,15 +43,15 @@ public class Workout {
     }
 
 
-    public static void createOutdoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
+    public static int createOutdoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String weather, Float temp) {
         ArrayList<Integer> activities = Workout.getActivitiesFromWorkout(connection, template);
-        Workout.createOutdoor(connection, activities, date, shape, performance, notes, spectators, weather, temp);
+        return Workout.createOutdoor(connection, activities, date, shape, performance, notes, spectators, weather, temp, template);
     }
 
 
-    public static int createIndoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
+    public static int createIndoor(Connection connection, ArrayList<Integer> activities, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality, Integer templateID) {
 
-        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, null);
+        int ØktID = Workout.createWorkout(connection, activities, date, shape, performance, notes, spectators, templateID);
 
         try {
             PreparedStatement post = connection.prepareStatement("INSERT INTO INNENDØRS (TreningsØktID, Luftkvalitet) VALUES (?, ?)");
@@ -65,9 +65,9 @@ public class Workout {
         }
     }
 
-    public static void createIndoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
+    public static int createIndoorFromTemplate(Connection connection, int template, java.sql.Date date, int shape, int performance, String notes, int spectators, String airQuality) {
         ArrayList<Integer> activities = Workout.getActivitiesFromWorkout(connection, template);
-        Workout.createIndoor(connection, activities, date, shape, performance, notes, spectators, airQuality);
+        return Workout.createIndoor(connection, activities, date, shape, performance, notes, spectators, airQuality, template);
     }
 
 
@@ -199,10 +199,7 @@ public class Workout {
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
             ArrayList<Integer> activities = new ArrayList<Integer>();
             activities.add(1);
-            Workout.createOutdoor(con, activities, sqlDate, 4, 4, "Notes", 0, "Pretty good", (float)22.1);
-            //Workout.createIndoor(con, activities, sqlDate, 2, 6, "Notes", 0, "Good");
-
-            //Workout.createOutdoorFromTemplate(con, 25, sqlDate, 4, 4, "Notes", 0, "Ok weather", (float)20.0);
+            //Workout.createOutdoor(con, activities, sqlDate, 4, 4, "Notes", 0, "Pretty good", (float)22.1, null);
 
         } catch (SQLException ex) {
             ex.printStackTrace();
