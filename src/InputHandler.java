@@ -69,6 +69,10 @@ public class InputHandler {
                         if (NumArgs(input, 1)) {
                             ListActivity();
                         } break;
+                    case "results":
+                        if (NumArgs(input, 2)) {
+                            // TODO : List results for activity
+                        }
                     case "delete":
                         if (NumArgs(input, 2)) {
                             DeleteActivity(input[1]);
@@ -366,7 +370,17 @@ public class InputHandler {
     }
 
     // ---- RESULT ---
-    // TODO
+
+    public void ListResultsForActivity(String activityID) {
+
+        /*Integer actID = stringToInt(activityID);
+
+        if (actID != null) {
+            ArrayList<Result> results =
+        }*/
+
+
+    }
 
 
 
@@ -715,5 +729,15 @@ public class InputHandler {
         }
 
         this.state = newState;
+    }
+
+    public Integer stringToInt(String string) {
+        try {
+            return Integer.parseInt(string);
+        }
+        catch (NumberFormatException ex) {
+            System.out.println("Error in input");
+            return null;
+        }
     }
 }

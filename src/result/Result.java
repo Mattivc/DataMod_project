@@ -70,21 +70,7 @@ public class Result {
             post.setInt(1, workoutID);
             post.setInt(2, workoutID);
             ResultSet rs = post.executeQuery();
-
-            ArrayList strengthResults = new ArrayList();
-            while (rs.next()) {
-
-                int actID = Integer.parseInt(rs.getString("ØvelseID"));
-                int woID = Integer.parseInt(rs.getString("TreningsØktID"));
-                float weight = rs.getFloat("Belastning");
-                int sets = rs.getInt("Antall_sett");
-                int reps = rs.getInt("Antall_reps");
-
-                StrengthResult result = new StrengthResult(actID, woID, weight, sets, reps);
-                strengthResults.add(result);
-            }
-
-            return strengthResults;
+            return createStrengthResultsFromResultSet(rs);
 
 
         } catch (SQLException ex) {
@@ -93,12 +79,42 @@ public class Result {
         }
     }
 
-    public static ArrayList getCardioResultsForWorkout(Connection connection, int workoutID) {
+    public static ArrayList<CardioResult> getCardioResultsForWorkout(Connection connection, int workoutID) {
         try {
 
             PreparedStatement post = connection.prepareStatement("SELECT * FROM KONDISJON WHERE TreningsØktID = ?");
             post.setInt(1, workoutID);
             ResultSet rs = post.executeQuery();
+            return createCardioResultsFromResultSet(rs);
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static ArrayList<Result> getResultsForActivity(Connection con, int activityID) {
+
+        try {
+
+            ResultSet rs = con.createStatement().executeQuery("SELECT * FROM (SELECT  * FROM RESULTAT JOIN KON)");
+            ResultSet rs2 = con.createStatement().executeQuery("SELECT * FROM STYRKE JOIN ØVELSE ON KONDISJON.ØvelseID = ØVELSE.ØvelseID WHERE ØVELSE.ØvelseID LIKE "+activityID+"");
+            ArrayList<Result> results = new ArrayList<>();
+            results.addAll(createCardioResultsFromResultSet(rs));
+            results.addAll(createStrengthResultsFromResultSet(rs2));
+            return results;
+        }
+        catch (java.sql.SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    public static ArrayList<CardioResult> createCardioResultsFromResultSet(ResultSet rs) {
+        try {
 
             ArrayList cardioResults = new ArrayList();
             while (rs.next()) {
@@ -121,6 +137,32 @@ public class Result {
         }
     }
 
+    public static ArrayList<StrengthResult> createStrengthResultsFromResultSet(ResultSet rs) {
+        try {
+
+            ArrayList<StrengthResult> strengthResults = new ArrayList<>();
+            while (rs.next()) {
+
+                int actID = Integer.parseInt(rs.getString("ØvelseID"));
+                int woID = Integer.parseInt(rs.getString("TreningsØktID"));
+                float weight = rs.getFloat("Belastning");
+                int sets = rs.getInt("Antall_sett");
+                int reps = rs.getInt("Antall_reps");
+
+                StrengthResult result = new StrengthResult(actID, woID, weight, sets, reps);
+                strengthResults.add(result);
+            }
+
+            return strengthResults;
+
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+
     public static void main(String[] args){
         Connection con = null;
         Statement st = null;
@@ -132,6 +174,7 @@ public class Result {
 
         try {
             con = DriverManager.getConnection(url, user, password);
+            System.out.print(Result.getResultsForActivity(con, 1));
             //Result.addStrengthResult(con, 1,1, (float)20.0, 3, 12);
             //ArrayList<StrengthResult> results = Result.getStrengthResultsForWorkout(con, 1);
             //System.out.print(results.size());
