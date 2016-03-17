@@ -79,7 +79,6 @@ public abstract class Goal {
             ex.printStackTrace();
             return false;
         }
-
     }
 
     public static boolean setCardioGoalAsCompleted(Connection con, int goalID) {

@@ -2,6 +2,7 @@ package result;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Result {
 
@@ -112,6 +113,9 @@ public class Result {
 
 
     }
+
+
+
 
     public static ArrayList<CardioResult> createCardioResultsFromResultSet(ResultSet rs) {
         try {

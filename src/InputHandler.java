@@ -89,11 +89,7 @@ public class InputHandler {
 
             case WORKOUT:
                 switch (cmd) {
-                    case "createtemplate":
-                        if (NumArgs(input, 2)) {
-
-                        } break;
-                    case "listtemplates":
+                    case "list":
                         if (NumArgs(input, 1)) {
 
                             ListWorkouts();
@@ -711,7 +707,7 @@ public class InputHandler {
                     "-----------------------------------------------\n" +
                     "Workout Commands: \n" +
                     "StartWorkout [Template(Optional)] - Start new workout\n" +
-                    "ListTemplates - List all workouts\n" +
+                    "List - List all workouts\n" +
                     "ListActivities [Name] - List all activities in a template\n" +
                     "DeleteTemplate [Name] - Delete a existing workout template\n" +
                     "Back - Return to result menu\n" +
