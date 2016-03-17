@@ -4,6 +4,18 @@ import java.util.*;
 
 public class ActivityGroup {
 
+
+    public int ID;
+    public String name;
+    public Integer belongsToGroup;
+
+    public ActivityGroup(int ID, String name, Integer belongsToGroup) {
+        this.ID = ID;
+        this.name = name;
+        this.belongsToGroup = belongsToGroup;
+    }
+
+
     public static boolean create(Connection con, String name, Integer belongsToGroup) {
         try {
             PreparedStatement post = con.prepareStatement("INSERT INTO GRUPPE (Navn, TilhørerGruppeID) VALUES (?, ?)");
@@ -37,10 +49,29 @@ public class ActivityGroup {
         return true;
     }
 
-    public static ArrayList<Activity> getAll(Connection con, String name){
-        ArrayList<Activity> list = new ArrayList<>();
-        //TODO (hvis vi ønsker å implementere dette)
-        return list;
+    public static ArrayList<ActivityGroup> getAll(Connection con){
+        try {
+
+            PreparedStatement post = con.prepareStatement("SELECT * FROM GRUPPE");
+            ResultSet rs = post.executeQuery();
+
+            ArrayList groups = new ArrayList();
+            while (rs.next()) {
+
+                int ID = Integer.parseInt(rs.getString("GruppeID"));
+                String name = rs.getString("Navn");
+                Integer belongsToGroup = rs.getInt("TilhørerGruppeID");
+
+                ActivityGroup ag = new ActivityGroup(ID, name, belongsToGroup);
+                groups.add(ag);
+            }
+
+            return groups;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 
