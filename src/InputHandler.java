@@ -668,6 +668,15 @@ public class InputHandler {
 
             for (Activity activity : activities) {
                 System.out.println((activities.indexOf(activity) + 1) + ". " + activity.name + " -  Beskrivelse: " + activity.description + " Gruppe: " + activity.groupID + " Erstatning: " + activity.replacement);
+                Result result = Result.getResult(con, workout.workoutID, activity.ID);
+                if (result instanceof CardioResult) {
+                    CardioResult cr = (CardioResult) result;
+                    System.out.println("---Resultat: " + "Lengde: " + cr.lenght + " Tid: " + cr.duration);
+                }
+                else if (result instanceof StrengthResult) {
+                    StrengthResult sr = (StrengthResult) result;
+                    System.out.println("---Resultat: " + "Vekt: " + sr.weight + " Sett: " + sr.sets + " Reps: " + sr.reps);
+                }
             }
 
         }
