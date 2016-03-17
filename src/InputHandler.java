@@ -298,7 +298,7 @@ public class InputHandler {
             ArrayList<CardioGoal> goals = Goal.getCardioGoals(con);
 
             for (CardioGoal goal : goals) {
-                System.out.println("Type: Cardio" + " ID: " + goal.getGoalID() + " ØvelseID: " + goal.getActivityID() + " Lengde: " + goal.getLenght() + " Tid: " + goal.getDuration());
+                System.out.println("Type: Cardio" + " | ID: " + goal.getGoalID() + " | ØvelseID: " + goal.getActivityID() + " | Lengde: " + goal.getLenght() + " | Tid: " + goal.getDuration() + " | Fullført: " + goal.getCompleted());
             }
 
         }
@@ -307,7 +307,7 @@ public class InputHandler {
             ArrayList<StrengthGoal> goals = Goal.getStrengthGoals(con);
 
             for (StrengthGoal goal: goals) {
-                System.out.println("Type: Strength" + " ID: " + goal.getGoalID() + " ØvelseID: " + goal.getActivityID() + " Weight: " + goal.getWeight() + " Set: " + goal.getSets() + " Reps: " + goal.getReps());
+                System.out.println("Type: Strength" + " | ID: " + goal.getGoalID() + " | ØvelseID: " + goal.getActivityID() + " | Weight: " + goal.getWeight() + " | Set: " + goal.getSets() + " | Reps: " + goal.getReps() + " | Fullført: " + goal.getCompleted());
             }
         }
 
@@ -361,7 +361,7 @@ public class InputHandler {
         ArrayList<Integer> inputActivities = new ArrayList<>();
         ArrayList<Activity> dbActivities = Activity.getAll(con);
 
-        System.out.println("Add workout:");
+        System.out.println("Add activities to workout:");
 
         for (Activity activity: dbActivities) {
             String ID = Integer.toString(activity.ID);
@@ -600,7 +600,7 @@ public class InputHandler {
         for (Workout workout : workouts) {
            ArrayList<Activity> activities = Activity.getActivitiesForWorkout(con,workout.workoutID);
 
-            System.out.println("WORKOUT - " + workout.date + "\n" +
+            System.out.println("\nWORKOUT - " + workout.date + "\n" +
             "------------------------------------------------------\n" +
             "ID: " + workout.workoutID + " MalID: " + workout.templateID + " Form: " + workout.shape + "\n" +
             "Prestasjon: " + workout.prestation + " Tilskuere: " + workout.viewers + "\nNotat: " + workout.note + "\n" +
