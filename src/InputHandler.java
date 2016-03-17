@@ -45,7 +45,8 @@ public class InputHandler {
                     } break;
                     case "activitygroup": {
                         SetState(InputHandlerState.ACTIVITYGROUP);
-                    } break;
+                    }
+                    break;
                     case "quit": {
                         System.out.println("Goodbye.");
                         return true;
@@ -64,22 +65,36 @@ public class InputHandler {
                             CreateActivity(input[1], input[2], Integer.parseInt(input[3]), null);
                         } else if (NumArgs(input, 5)) {
                             CreateActivity(input[1], input[2], Integer.parseInt(input[3]), Integer.parseInt(input[4]));
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "list":
                         if (NumArgs(input, 1)) {
                             ListActivity();
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "results":
                         if (NumArgs(input, 2)) {
                             ListResultsForActivity(input[1]);
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "delete":
                         if (NumArgs(input, 2)) {
                             DeleteActivity(input[1]);
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "back":
                         if (NumArgs(input, 1)) {
                             SetState(InputHandlerState.MAIN);
+                        }else {
+                            System.out.println("Wrong number of arguments");
                         } break;
                     default:
                         System.out.println("Invalid command: " + cmd);
@@ -94,15 +109,23 @@ public class InputHandler {
 
                             ListWorkouts();
 
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "listactivities":
                         if (NumArgs(input, 1)) {
                             ListTemplateActivities(input[1]);
-                        }
+                        }else {
+                            System.out.println("Wrong number of arguments");
+                        } break;
                     case "deletetemplate":
                         if (NumArgs(input, 2)) {
 
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "startworkout":
                         if (input.length == 1) {
                             StartWorkout(-1);
@@ -115,7 +138,10 @@ public class InputHandler {
                     case "back":
                         if (NumArgs(input, 1)) {
                             SetState(InputHandlerState.MAIN);
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     default:
                         System.out.println("Invalid command: " + cmd);
                         break;
@@ -131,31 +157,47 @@ public class InputHandler {
                         else if (NumArgs(input, 4) ){
                             CreateCardioGoal(input[1], input[2], input[3]);
                         }
-                        System.out.print("Wrong number of arguments");
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }
                         break;
                     case "reach":
                         if (NumArgs(input, 3)){
 
                             ReachGoal(input [1], input[2]);
                         }
-                        System.out.println("Wrong number of arguments");
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }
                         break;
                     case "list":
                         if (NumArgs(input, 2)){
                             ListGoals(input[1]);
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "delete":
                         if (NumArgs(input, 3)){
                             DeleteGoal(input[1], input[2]);
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "activitygoals":
                         if (NumArgs(input, 2)) {
                             ListGoalsForActivity(input[1]);
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     case "back":
                         if (NumArgs(input, 1)) {
                             SetState(InputHandlerState.MAIN);
-                        } break;
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }break;
                     default:
                         System.out.println("Invalid command: " + cmd);
                         break;
@@ -170,15 +212,24 @@ public class InputHandler {
                         } else if (NumArgs(input, 3)){
                             CreateActivityGroup(input[1],Integer.parseInt(input[2]));
                         }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }
                     } break;
                     case "list": {
                         if (NumArgs(input, 1)) {
                             ListGroupActivities();
                         }
+                        else {
+                            System.out.println("Wrong number of arguments");
+                        }
                     } break;
                     case "delete": {
                         if (NumArgs(input, 2)){
                             DeleteActivityGroup(input[1]);
+                        }
+                        else {
+                            System.out.println("Wrong number of arguments");
                         }
                     } break;
                     case "back": {
