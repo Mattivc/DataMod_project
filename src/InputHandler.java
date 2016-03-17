@@ -383,12 +383,12 @@ public class InputHandler {
             for (Goal goal : goals) {
                 if (goal instanceof StrengthGoal) {
                     StrengthGoal sg = (StrengthGoal) goal;
-                    System.out.println("Type: Strength" + " | ID: " + sg.getGoalID() + " | ØvelseID: " + sg.getActivityID() + " | Weight: " + sg.getWeight() + " | Set: " + sg.getSets() + " | Reps: " + sg.getReps() + " | Fullført: " + sg.getCompleted());
+                    System.out.println("Type: Strength" + " | ID: " + sg.getGoalID() + " | ØvelseID: " + sg.getActivityID() + " | Weight: " + sg.getWeight() + " | Set: " + sg.getSets() + " | Reps: " + sg.getReps() + " | Fullført: " + sg.getCompleted() + " | Dato: " + sg.getDate());
                 }
                 else if (goal instanceof CardioGoal) {
 
                     CardioGoal cg = (CardioGoal) goal;
-                    System.out.println("Type: Cardio" + " | ID: " + cg.getGoalID() + " | ØvelseID: " + cg.getActivityID() + " | Lengde: " + cg.getLenght() + " | Tid: " + cg.getDuration() + " | Fullført: " + cg.getCompleted());
+                    System.out.println("Type: Cardio" + " | ID: " + cg.getGoalID() + " | ØvelseID: " + cg.getActivityID() + " | Lengde: " + cg.getLenght() + " | Tid: " + cg.getDuration() + " | Fullført: " + cg.getCompleted() + " | Dato: " + cg.getDate());
 
                 }
             }
