@@ -135,28 +135,4 @@ public class Activity {
 
     }
 
-
-    public static void main(String[] args){
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-
-        String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
-        String user = "user";
-        String password = "12345678";
-
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            System.out.print(getGoalsForActivity(con, 1));
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-
-        }
-
-    }
-
-
-
 }

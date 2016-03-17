@@ -202,35 +202,4 @@ public class Result {
         }
     }
 
-
-    public static void main(String[] args){
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-
-        String url = "jdbc:mysql://localhost:3306/Trening?useSSL=false";
-        String user = "user";
-        String password = "12345678";
-
-        try {
-            con = DriverManager.getConnection(url, user, password);
-            System.out.print(Result.getResultsForActivity(con, 1));
-            //Result.addStrengthResult(con, 1,1, (float)20.0, 3, 12);
-            //ArrayList<StrengthResult> results = Result.getStrengthResultsForWorkout(con, 1);
-            //System.out.print(results.size());
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-
-        }
-
-    }
-
-
-
-
-
-
-
 }
