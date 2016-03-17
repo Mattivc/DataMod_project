@@ -175,13 +175,13 @@ public class InputHandler {
                             CreateActivityGroup(input[1],Integer.parseInt(input[2]));
                         }
                     } break;
-                    case "list ": {
+                    case "list": {
                         if (NumArgs(input, 1)) {
-                            ListGroupActivities(input[1]);
+                            ListGroupActivities();
                         }
                     } break;
                     case "delete": {
-                        if (NumArgs(input, 1)){
+                        if (NumArgs(input, 2)){
                             DeleteActivityGroup(input[1]);
                         }
                     } break;
@@ -239,8 +239,13 @@ public class InputHandler {
         ActivityGroup.create(this.con, name, belongsToGroup);
     }
 
-    public void ListGroupActivities(String name){
-        ActivityGroup.getAll(this.con, name);
+    public void ListGroupActivities(){
+        ArrayList<ActivityGroup> groups = ActivityGroup.getAll(this.con);
+        for (ActivityGroup ag : groups) {
+            System.out.println("Name: " + ag.name);
+            System.out.println("    ID: " + Integer.toString(ag.ID));
+            System.out.println("    Part of group: " + Integer.toString(ag.belongsToGroup));
+        }
     }
 
     public void DeleteActivityGroup(String name){
@@ -732,7 +737,7 @@ public class InputHandler {
                     "-----------------------------------------------\n" +
                     "ActivityGroup Commands: \n" +
                     "Create [Name] (Group)- Create a new group, optionally belonging to another group\n" +
-                    "List [name] - List existing ActivityGroups\n" +
+                    "List - List existing ActivityGroups\n" +
                     "Delete [Name] - Delete an existing ActivityGroup\n" +
                     "Back - Return to result menu\n" +
                     "-----------------------------------------------\n"
