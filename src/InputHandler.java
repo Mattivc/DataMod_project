@@ -358,7 +358,7 @@ public class InputHandler {
             ArrayList<CardioGoal> goals = Goal.getCardioGoals(con);
 
             for (CardioGoal goal : goals) {
-                System.out.println("Type: Cardio" + " | ID: " + goal.getGoalID() + " | ØvelseID: " + goal.getActivityID() + " | Lengde: " + goal.getLenght() + " | Tid: " + goal.getDuration() + " | Fullført: " + goal.getCompleted());
+                System.out.println("Type: Cardio" + " | ID: " + goal.getGoalID() + " | ØvelseID: " + goal.getActivityID() + " | Lengde: " + goal.getLenght() + " | Tid: " + goal.getDuration() + " | Fullført: " + goal.getCompleted() + " | Dato: " + goal.getDate());
             }
 
         }
@@ -367,7 +367,7 @@ public class InputHandler {
             ArrayList<StrengthGoal> goals = Goal.getStrengthGoals(con);
 
             for (StrengthGoal goal: goals) {
-                System.out.println("Type: Strength" + " | ID: " + goal.getGoalID() + " | ØvelseID: " + goal.getActivityID() + " | Weight: " + goal.getWeight() + " | Set: " + goal.getSets() + " | Reps: " + goal.getReps() + " | Fullført: " + goal.getCompleted());
+                System.out.println("Type: Strength" + " | ID: " + goal.getGoalID() + " | ØvelseID: " + goal.getActivityID() + " | Weight: " + goal.getWeight() + " | Set: " + goal.getSets() + " | Reps: " + goal.getReps() + " | Fullført: " + goal.getCompleted() + " | Dato: " + goal.getDate());
             }
         }
 
